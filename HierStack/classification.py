@@ -1,6 +1,6 @@
 import networkx as nx
 import numpy as np
-import hierarchy
+from HierStack import hierarchy
 import pandas as pd
 import numpy.linalg
 class classification:
