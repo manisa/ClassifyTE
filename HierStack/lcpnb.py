@@ -9,16 +9,7 @@ class lcpnb:
 	def __init__(self,h):
 		self.H = h
 		self.predicted = []
-		# self.true = []
-		# self.true.append(str(true))
 		self.probs = {}
-
-		# while list(self.H.G.predecessors(true)):
-		# 	self.true.extend(list(self.H.G.predecessors(true)));
-		# 	true = list(self.H.G.predecessors(true))[0]
-		# self.true.pop(-1)
-		# self.true.reverse()
-
 
 
 	def classify(self, example, parent_classifiers):

@@ -76,7 +76,6 @@ if __name__ == '__main__':
 		print(str(hier_label[i][1]))
 	
 	elapsed_time = time.time() - start_time
-	print("\nTtime to test the data\t")
-	print(elapsed_time)
+	print("\nTotal time elapsed in seconds\t", elapsed_time)
 	print("---------------------------------------------Done with Classification. Open Output folder to view the output file.---------------------------------------------")
 

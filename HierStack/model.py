@@ -16,6 +16,8 @@ from HierStack import classification as cl
 from HierStack  import lcpnb as lcpnb
 from HierStack import stackingClassifier as Stack
 
+#C=32, gamma=0.03125
+#C=512.0, gamma=0.0078125
 
 class model:
 	def __init__(self, h, algo):
@@ -54,7 +56,7 @@ class model:
 			KNN = Pipeline([('scaler',preprocessing.StandardScaler()),
 				('KNN', KNeighborsClassifier(n_neighbors=15, algorithm='auto')) ])
 
-			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=512.0, gamma=0.0078125, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
+			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=32, gamma=0.03125, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
 			ET = Pipeline([('scaler', preprocessing.StandardScaler()),('Extra_Trees', ExtraTreesClassifier(n_estimators = 1000, max_depth=8, class_weight='balanced', random_state=42))])
 
 			base_classifiers = [ KNN , SVM, ET] 
