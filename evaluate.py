@@ -17,20 +17,24 @@ from HierStack import model as mo
 from HierStack import lcpnb as cl
 from HierStack.stackingClassifier import *
 
-def main(algorithm, test_data):
+def main(algorithm, data):
 	# ------------------------- Generate hierarcical classification for the sequence-----------------------------
-	model_filepath = 'Models/'
+	model_filepath = "Models/"
 	output_filepath = "Output/"
 	pkl_filename = "ClassifyTE.pkl"
 
+	test_data = data.iloc[:, 0:(pow(4,2) + pow(4,3) + pow(4,4))]
+	test_label = data.iloc[:,-1]
+
 	#test_label = pd.DataFrame(test_data['classification'])
 	#test_data = pd.DataFrame(test_data.drop('classification', axis=1))
-	test_data=data
+
 	parent_classifiers = {}
 
 	with open(model_filepath + pkl_filename, 'rb') as fb:
 		parent_classifiers = pickle.load(fb)
 
+	print("---------------------------------------------Evaluation Started---------------------------------------------\n")
 	m = mo.model(h, algorithm)
 
 	m.evaluate_model(test_data, parent_classifiers)
@@ -68,6 +72,9 @@ if __name__ == '__main__':
 
 	with open(dataset_filepath + options.filename , "r") as csvfile:
 		data = pd.read_csv(csvfile, low_memory=False)
+
+	X = data.iloc[:, 0:(pow(4,2) + pow(4,3) + pow(4,4))]
+	Y = data.iloc[:,-1]
 
 	hier_label = {}
 	hier_label = main(options.algorithm, data)
