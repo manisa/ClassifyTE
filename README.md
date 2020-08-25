@@ -1,13 +1,25 @@
 # ClassifyTE: Stacking-based Machine Learning Framework for Hierarchical Classification of transposable 
 
-Transposable Elements (TEs) or jumping genes are the DNA sequences that have an intrinsic capability to move within a host genome from one genomic location to another. Studies show that the presence of a TE within or adjacent to a functional gene may alter its expression. TEs can also cause an increase in the rate of mutation and can even mediate duplications and large insertions and deletions in the genome, promoting gross genetic rearrangements. Thus, the proper classification of the identified jumping genes is essential to understand their genetic and evolutionary effects in the genome. 
-Here in this work we have established stacking based hierarchical classification framework to classify TE up to it super-family level.
+Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, and Joel Atallah
 
-## Getting Started
+- [Paper](https://arxiv.org/abs/1907.01674)
+
+### Table of Content
+- [Setup](#getting-started)
+	- [Download and install code](#download-and-install-code)
+	- [Download Models](#download-models)
+	- [Demo](#demo)
+- [Training](#training)
+	- [Download Datasets](#download-datasets)
+- [Acknowledgements](#achknowledgement)
+- [References](#references)
+
+
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## Prerequisites
 
 You would need to install the following software before replicating this framework in your local or server machine.
 
@@ -17,17 +29,54 @@ Python version 3.5+
 Aanaconda version 3+
 ```
 
-### Installing
+## Download and install code
+- Retrieve the code
+```sh
+git clone https://github.com/manisa/ClassifyTE.git
+cd ClassifyTE
+```
 
-You can run following command to generate an enviroment for ClassifyTE. Running following command will automatically install all the packages necessary to run the framework.
-
+- Create and activate the virtual environment with python dependendencies
 ```
 conda env create -f environment.yml
+conda activate ClassifyTE_env
 ```
 
-## Running the tests
 
-Explain how to run the automated tests for this system
+## Download Models
+- Go to [this link](https://cs.uno.edu/~tamjid/Software.html)
+- Click on ClassifyTE_Models. This will automatically download models built with TE datasets.
+- Unzip and copy the folder *Models* into root folder *ClassifyTE".
+- Your directory structure should look like this:
+
+```
+ClassifyTE/
+	Models/
+		ClassifyTE.pkl
+		Repbase.pkl
+		MIPS.pkl
+
+```
+
+## Download datasets
+- Go to [this link](https://cs.uno.edu/~tamjid/Software.html)
+- Click on ClassifyTE_Datasets. This will automatically download models built with TE mixed dataset.
+- Unzip and copy the folder *Models* into root folder *ClassifyTE".
+- Your directory structure should look like this:
+
+```
+ClassifyTE/
+	Data/
+		mips_features_TE_upto_6mer.csv
+		repbase_features_TE_upto_6mer.csv
+		mips+repbase_features_TE_upto_6mer.csv
+		
+
+```
+- 
+## Demo
+
+
 
 ```
 Give an example
