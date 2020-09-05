@@ -1,8 +1,7 @@
 # ClassifyTE: Stacking-based Machine Learning Framework for Hierarchical Classification of transposable 
 
-Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, and Joel Atallah
-
 - [Paper](https://arxiv.org/abs/1907.01674)
+- The basic framework has been adapted from the state-of-the-art method [1].
 
 ### Table of Content
 - [Setup](#getting-started)
@@ -84,19 +83,14 @@ Give an example
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-
 ## Authors
-
+Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, joel Atallah
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
+##References
+-[1] Nakano, F.K., et al. Top-down Strategies for Hierarchical Classification of Tranposable Elelments with Neural Networks. In, IEEE. 2017.
 
