@@ -88,7 +88,7 @@ class StackingClassifier:
 		self.create_directories(indexing, noding)
 		loc = os.getcwd() + "/" + indexing + "/" + noding + "/"		
 
-		X_meta_probabilities = self.fit_base_models(X, y,loc)
+		X_meta_probabilities = self.fit_base_models(X, y, loc)
 		X = self.create_x_blending(X_meta_probabilities, X)
 		#print(X)	
 		clf = self.meta_classifier

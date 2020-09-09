@@ -30,12 +30,12 @@ class model:
 		self.recall_level = self.hf_level = []
 		self.labels_test = []
 
-	def generate_models(self, dataInnerNode, index):
+	def generate_models(self, dataInnerNode, index, C, gamma):
 		output_filepath = 'models'
 		if not os.path.isdir(output_filepath):
 			os.mkdir(output_filepath)
 
-		pkl_filename = "ClassifyTE" + ".pkl"
+		pkl_filename = "ClassifyTE.pkl"
 		i = 0
 		parent_classifiers = {}
 		for node in dataInnerNode:
@@ -56,7 +56,7 @@ class model:
 			KNN = Pipeline([('scaler',preprocessing.StandardScaler()),
 				('KNN', KNeighborsClassifier(n_neighbors=15, algorithm='auto')) ])
 
-			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=128.0, gamma=0.0078125, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
+			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=C, gamma=gamma, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
 			ET = Pipeline([('scaler', preprocessing.StandardScaler()),('Extra_Trees', ExtraTreesClassifier(n_estimators = 1000, max_depth=8, class_weight='balanced', random_state=42))])
 
 			base_classifiers = [ KNN , SVM, ET] 

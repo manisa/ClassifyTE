@@ -17,7 +17,7 @@ from HierStack import model as mo
 #from HierStack import classification as cl
 import HierStack.classification as cl
 
-def main(algorithm, X, Y):	
+def main(algorithm, X, Y, C, gamma):	
 	index = 1
 	train_data = pd.concat([X, Y], axis=1)
 
@@ -38,6 +38,8 @@ if __name__ == '__main__':
 	parser = OptionParser()
 	parser.add_option("-f", "--filename", dest="filename", help="Name of the training file.")
 	parser.add_option("-n", "--nodes_filepath", dest="node_file", help="Path to node filelist.")
+	parser.add_option("-c", "--c_value", dest="c_value", help="c parameter for SVM")
+	parser.add_option("-g", "--gamma_value", dest="gamma_value", help="gamma parameter for SVM")
 	
 	# Hierarchical classification algorithm can be either:
 	# 		non-Leaf Local Classifier per Parent Node (nLCPN)
@@ -47,8 +49,8 @@ if __name__ == '__main__':
 
 	(options, args) = parser.parse_args()
     #nodes_filepath = sys.argv[1]
-	dataset_filepath = "./Data/"
-	node_filepath = "./Nodes/"
+	dataset_filepath = "./data/"
+	node_filepath = "./nodes/"
 
 	h = hie.hierarchy(node_filepath + options.node_file)
 
@@ -62,10 +64,10 @@ if __name__ == '__main__':
 	Y = data.iloc[:,-1]
 
 	
-	X_train4, X_test4, Y_train4, Y_test4 = train_test_split(X4, Y, test_size=0.15, stratify=Y, random_state=42)
+	#X_train4, X_test4, Y_train4, Y_test4 = train_test_split(X4, Y, test_size=0.15, stratify=Y, random_state=42)
 
 	start_time = time.time()
-	main(options.algorithm, X4, Y)
+	main(options.algorithm, X4, Y, options.c_value, options.gamma_value)
 	total_time = time.time() - start_time
 	print("---------------------------------------------Ending Training--------------------------------------------")
 	print("\nTotal time elapsed in minutes\t", total_time/60)

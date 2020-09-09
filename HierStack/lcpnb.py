@@ -43,5 +43,7 @@ class lcpnb:
 		for o in predicteds:
 			sum_probs.append(sum([ self.probs[classification]for classification in o ])/len(o))
 		self.predicted = predicteds[np.argmax(sum_probs)]
+		
 		self.predicted = [ c for c in self.predicted if not c.startswith('#') ]
+		print(self.predicted)
 		

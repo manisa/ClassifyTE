@@ -16,29 +16,30 @@ from HierStack import model as mo
 from HierStack import lcpnb as cl
 from HierStack.stackingClassifier import *
 
-def main(algorithm, X, Y, kmer):
+def main(algorithm, X, Y, C, gamma):
 	#------------------------ create file to store overall results --------------------------
 	output_filepath = 'output'
 	if not os.path.isdir(output_filepath):
 		os.mkdir(output_filepath)
-	output_filename = 'result_' + str(kmer) + '.txt'
+	output_filename = 'result_' + '.txt'
 
 	fd = open(os.path.join(output_filepath, output_filename), 'w')
 
 
 	# ------------------------- Generate ML Models and test them using train_test_split . -----------------------------
 	
-	cv = StratifiedKFold(n_splits=10)
+	#cv = StratifiedKFold(n_splits=10)
 	data = pd.concat([X, Y], axis=1)
 	index = 1
-	test_label = pd.DataFrame(data['classification'])
-	test_data = pd.DataFrame(data.drop('classification', axis=1))
+	Y = pd.DataFrame(data['classification'])
+	X = pd.DataFrame(data.drop('classification', axis=1))
 
 		
 	parent_classifiers = {}
-
+	dataInnerNode = h.getDataFromInnerNodes(data)
 	m = mo.model(h, algorithm)
-	#parent_classifiers = m.generate_models(dataInnerNode, kmer, index)
+
+	parent_classifiers = m.generate_models(dataInnerNode, index)
 
 	input_filepath = 'models/'
 	pkl_filename = "ClassifyTE.pkl"
@@ -46,7 +47,7 @@ def main(algorithm, X, Y, kmer):
 	with open(input_filepath + pkl_filename, 'rb') as fb:
 		parent_classifiers = pickle.load(fb)
 
-	m.test_model(test_data, test_label, parent_classifiers)
+	m.test_model(X, Y, parent_classifiers)
 
 
 	# ---------------- Write fold-wise results to a file ---------------------
@@ -68,7 +69,7 @@ def main(algorithm, X, Y, kmer):
     
 	
 	
-	fold_output_filename = "fold" + str(index) + "_labels_test_" +  str(kmer) + ".txt"
+	fold_output_filename = "fold" + str(index) + "_labels_test_" + ".txt"
 	f = open(os.path.join(output_filepath, fold_output_filename) ,'w')
 	f.write('true \t predicted\n')
 	for i in range(len(m.labels_test)):
@@ -97,7 +98,10 @@ if __name__ == '__main__':
 	parser = OptionParser()
 	parser.add_option("-f", "--filename", dest="filename", help="Name of the training file.")
 	parser.add_option("-n", "--node_file", dest="node_file", help="Path to node filelist.", default="node.txt")
-	
+	parser.add_option("-c", "--c_value", dest="c_value", help="c parameter for SVM")
+	parser.add_option("-g", "--gamma_value", dest="gamma_value", help="gamma parameter for SVM")
+
+		
 	# Hierarchical classification algorithm can be either:
 	# 		non-Leaf Local Classifier per Parent Node (nLCPN)
 	# 		Local Classifier per Parent Node and Branch (LCPNB)
@@ -118,6 +122,6 @@ if __name__ == '__main__':
 	X4 = data.iloc[:, 0:(pow(4,2) + pow(4,3) + pow(4,4))]
 	Y = data.iloc[:,-1]
 
-	main(options.algorithm, X4, Y, 1)
-	print("---------------------------------------------Ending Training k=4---------------------------------------------")
+	main(options.algorithm, X4, Y, options.c_value, options.gamma_value)
+	print("---------------------------------------------Ending Training---------------------------------------------")
 

@@ -11,16 +11,17 @@ from sklearn.model_selection import train_test_split
 
 
 import pickle
-import hierarchy as hie
-import model as mo
-import classification as cl
+from HierStack import hierarchy as hie
+from HierStack import model as mo
+from HierStack import lcpnb as cl
+from HierStack.stackingClassifier import *
 
-def main(algorithm, X, Y):
+def main(algorithm, X, Y, neurons):
 	#------------------------ create file to store overall results --------------------------
 	output_filepath = 'CV_Results'
 	if not os.path.isdir(output_filepath):
 		os.mkdir(output_filepath)
-	output_filename = 'CV_Results_' + str(kmer) + '.txt'
+	output_filename = 'CV_Results_' + str(neurons) + '.txt'
 
 	fd = open(os.path.join(output_filepath, output_filename), 'w')
 
@@ -50,14 +51,14 @@ def main(algorithm, X, Y):
 		test_data = pd.DataFrame(test_data.drop('classification', axis=1))
 
 		m = mo.model(h, algorithm)
-		parent_classifiers = m.generate_models(dataInnerNode, kmer, index)
+		parent_classifiers = m.generate_models(dataInnerNode, neurons, index)
 
 		# Save models
-		input_filepath = 'Models/'
-		pkl_filename = "pickle_model_" + str(index) + ".pkl"
+		#input_filepath = 'Models/'
+		#pkl_filename = "pickle_model_" + str(neurons) + str(index) + ".pkl"
 		
-		with open(input_filepath + pkl_filename, 'rb') as fb:
-			parent_classifiers = pickle.load(fb)
+		#with open(input_filepath + pkl_filename, 'rb') as fb:
+		#	parent_classifiers = pickle.load(fb)
 
 		m.test_model(test_data, test_label, parent_classifiers)
 
@@ -81,7 +82,7 @@ def main(algorithm, X, Y):
 	    
 		
     	
-		fold_output_filename = "fold" + str(index) + "_labels_test_" +  str(kmer) + ".txt"
+		fold_output_filename = "fold" + str(index) + "_labels_test_" +  str(neurons) + ".txt"
 		f = open(os.path.join(output_filepath, fold_output_filename) ,'w')
 		f.write('true \t predicted\n')
 		for i in range(len(m.labels_test)):
@@ -109,8 +110,8 @@ if __name__ == '__main__':
 
 	parser = OptionParser()
 	parser.add_option("-f", "--filename", dest="filename", help="Name of the training file.")
-	parser.add_option("-n", "--nodes_filepath", dest="nodes_filepath", help="Path to node filelist.")
-	
+	parser.add_option("-n", "--nodes_filepath", dest="node_file", help="Path to node filelist.")
+
 	# Hierarchical classification algorithm can be either:
 	# 		non-Leaf Local Classifier per Parent Node (nLCPN)
 	# 		Local Classifier per Parent Node and Branch (LCPNB)
@@ -120,8 +121,9 @@ if __name__ == '__main__':
 	(options, args) = parser.parse_args()
     #nodes_filepath = sys.argv[1]
 	dataset_filepath = "./data/"
+	node_filepath = "./nodes/"
 
-	h = hie.hierarchy(options.nodes_filepath)
+	h = hie.hierarchy(node_filepath + options.node_file)
 
 	with open(dataset_filepath + options.filename , "r") as csvfile:
 		data = pd.read_csv(csvfile, low_memory=False)
@@ -129,57 +131,21 @@ if __name__ == '__main__':
 	#X1 = data.iloc[:, 0:pow(4,1)]
 	#X2 = data.iloc[:, 0:(pow(4,2))]
 	#X3 = data.iloc[:, 0:(pow(4,3))]
-	X4 = data.iloc[:, 0:(pow(4,4))]
-	X5 = data.iloc[:, 0:(pow(4,4) + pow(4,5))]
-	X6 = data.iloc[:, 0:(pow(4,4) + pow(4,5) + pow(4,6))]
+	X = data.iloc[:, 0:(pow(4,2) + pow(4,3) + pow(4,4))]
+	#X5 = data.iloc[:, 0:(pow(4,4) + pow(4,5))]
+	#X6 = data.iloc[:, 0:(pow(4,4) + pow(4,5) + pow(4,6))]
 
 	Y = data.iloc[:,-1]
 
-	#X_train1, X_test1, Y_train1, Y_test1 = train_test_split(X1, Y, test_size=0.20, stratify=Y, random_state=42)
-	# X_train2, X_test2, Y_train2, Y_test2 = train_test_split(X2, Y, test_size=0.20, stratify=Y, random_state=42)
-	# X_train3, X_test3, Y_train3, Y_test3 = train_test_split(X3, Y, test_size=0.20, stratify=Y, random_state=42)
-	# X_train4, X_test4, Y_train4, Y_test4 = train_test_split(X4, Y, test_size=0.20, stratify=Y, random_state=42)
-	# X_train5, X_test5, Y_train5, Y_test5 = train_test_split(X5, Y, test_size=0.20, stratify=Y, random_state=42)
-	# X_train6, X_test6, Y_train6, Y_test6 = train_test_split(X6, Y, test_size=0.20, stratify=Y, random_state=42)
 
-	# train_data1 = pd.concat([X_train1, Y_train1], axis=1)
-	# test_data1 = pd.concat([X_test1, Y_test1], axis=1)
-	# train_data2 = pd.concat([X_train2, Y_train2], axis=1)
-	# test_data2 = pd.concat([X_test2, Y_test2], axis=1)
-	# train_data3 = pd.concat([X_train3, Y_train3], axis=1)
-	# test_data3 = pd.concat([X_test3, Y_test3], axis=1)
-	# train_data4 = pd.concat([X_train4, Y_train4], axis=1)
-	# test_data4 = pd.concat([X_test4, Y_test4], axis=1)
-	# train_data5 = pd.concat([X_train5, Y_train5], axis=1)
-	# test_data5 = pd.concat([X_test5, Y_test5], axis=1)
-	# train_data6 = pd.concat([X_train6, Y_train6], axis=1)
-	# test_data6 = pd.concat([X_test6, Y_test6], axis=1)
+	main(options.algorithm, X, Y, 55)
+	print("---------------------------------------------Ending Training for 55 neurons---------------------------------------------")
 
+	main(options.algorithm, X, Y, 100)
+	print("---------------------------------------------Ending Training for 100 neurons---------------------------------------------")
 
-
-	#main(options.algorithm, X1, Y, 1)
-	#print("---------------------------------------------Ending Training k=1---------------------------------------------")
-
-	#main(options.algorithm, X2, Y, 2)
-	#print("---------------------------------------------Ending Training k=1,2---------------------------------------------")
-	
-	#main(options.algorithm, X3, Y, 3)
-	#print("---------------------------------------------Ending Training k=1,2,3---------------------------------------------")
-
-	main(options.algorithm, X4, Y, 4)
-	print("---------------------------------------------Ending Training k=1,2,3,4---------------------------------------------")
-
-	main(options.algorithm, X5, Y, 5)
-	print("---------------------------------------------Ending Training k=1,2,3,4,5---------------------------------------------")
-
-	main(options.algorithm, X6, Y, 6)
-	print("---------------------------------------------Ending Training k=1,2,3,4,5,6---------------------------------------------")
-    # algorithm = str(input("Enter the classification strategy.\nEither 'lcpnb' or 'nllcpn'. "))
-    # if algorithm == 'lcpnb':
-    #     main(algorithm)
-    # elif algorithm == 'nllcpn':
-    #     main(algorithm)
-    # else:
-    #     print('Wrong classification strategy. Enter again!')
-
-
+	main(options.algorithm, X, Y, 150)
+	print("---------------------------------------------Ending Training 150 neurons---------------------------------------------")
+    
+	main(options.algorithm, X, Y, 150)
+	print("---------------------------------------------Ending Training for 200 neurons---------------------------------------------")
