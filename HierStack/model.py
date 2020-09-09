@@ -122,7 +122,7 @@ class model:
 		# pi_ti = 0
 		# pi = 0
 		# ti = 0
-		labels_test = []
+		labels_evaluate = []
 		# pi_ti_level = np.zeros(self.h.getHeight())
 		# pi_level = np.zeros(self.h.getHeight())
 		# ti_level = np.zeros(self.h.getHeight())
@@ -130,4 +130,5 @@ class model:
 		for i in range(len(test_data)):
 			c = lcpnb.lcpnb(self.h)
 			predicted = c.classify(test_data.iloc[i].values.reshape(1,-1),parent_classifiers)
-		return predicted
+			labels_evaluate.append(predicted)
+		return labels_evaluate

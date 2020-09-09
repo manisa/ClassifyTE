@@ -6,6 +6,7 @@ import sys
 import os
 import subprocess
 import shutil
+from optparse import OptionParser
 from shutil import copy2
 
 def feature_generation(curr_dir1):
@@ -15,12 +16,7 @@ def feature_generation(curr_dir1):
 	kanalyzer_input_destpath = feature_destpath + "kanalyze-2.0.0/input_data/"
 	kanalyzer_output_destpath = feature_destpath + "kanalyze-2.0.0/output_data/"
 
-	#feature_srcpath = "./fasta/" + fasta_filename
 
-	#copy fasta file to ./feature/kanalyze-2.0.0/input_data
-	#shutil.copy2(feature_srcpath, kanalyzer_input_destpath + fasta_filename)
-
-	#create folder 2mer, 3mer and 4mer in ./feature/kanalyze-2.0.0/output_data
 	mer2_dir = kanalyzer_output_destpath + '2mer/'
 	mer3_dir = kanalyzer_output_destpath + '3mer/'
 	mer4_dir = kanalyzer_output_destpath + '4mer/'
@@ -59,12 +55,13 @@ def feature_generation(curr_dir1):
 
 def get_data(fasta_file):
 	curr_dir1 = os.getcwd()
+	data_filepath = curr_dir1 + "/data/"
 	feature_destpath = curr_dir1 + "/features/" 
 	kanalyzer_destpath = feature_destpath + "kanalyze-2.0.0/code/"
 	kanalyzer_input_destpath = feature_destpath + "kanalyze-2.0.0/input_data/"
 
 	sequence = ""
-	with open(curr_dir1 + '/' + fasta_file, 'rt') as fp: 
+	with open(data_filepath+ fasta_file, 'rt') as fp: 
 		content = fp.read()
 		data = content.split(">")
 		i=0
@@ -91,13 +88,20 @@ def get_data(fasta_file):
 
 def main():
 
-	# te_id = sys.argv[1]
-	# fasta = sys.argv[2]
+	
 	curr_dir1 = os.getcwd()
-	fasta_file = sys.argv[1]
-	#print(fasta_file)
+	parser = OptionParser()
+
+	parser.add_option("-f", "--filename", dest="filename", help="Name of the training file.")
+	#parser.add_option("-m", "--modelname", dest="modelname", help="Model name")
+	(options, args) = parser.parse_args()
+	fasta_file = options.filename
 	get_data(fasta_file)
 
+
+	#if we want to provide sequence in the command line, uncomment following
+	# te_id = sys.argv[1]
+	# fasta = sys.argv[2]
 	# fasta_filepath = "fasta"
 	# if not os.path.isdir(fasta_filepath):
 	# 		os.mkdir(fasta_filepath)
@@ -113,7 +117,7 @@ def main():
 	# f.close()
 
 	feature_generation(curr_dir1)
-	subprocess.run(['python', 'evaluate.py','-f','feature_file.csv','-n','node.txt'])
+	#subprocess.run(['python', 'evaluate.py','-f','feature_file.csv','-n','node.txt', 'm', ''])
 	
 
 
