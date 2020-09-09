@@ -74,13 +74,19 @@ ClassifyTE/
 ```
 ## Demo
 
-
-
-```
-Give an example
 ```
 
-## Deployment
+```
+
+## Training
+- To replicate the training procedure, follow following command line
+```
+  python train.py -f csv_file_name -n txt_node_file -c SVM_cost_parameter -g SVM_gamma_parameter
+```
+- Training example would look like as below:
+```
+python train.py -f repbase_features_TE_upto_6mer.csv -n node_repbase.txt -c 128.0 -g 0.0078125
+```
 
 ## Authors
 Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, joel Atallah

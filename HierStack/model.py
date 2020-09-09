@@ -29,8 +29,11 @@ class model:
 		self.precision_level = []
 		self.recall_level = self.hf_level = []
 		self.labels_test = []
+		self.evaluate_labels_test = [] 
 
-	def generate_models(self, dataInnerNode, index):
+	def generate_models(self, dataInnerNode, index, cost, gammas):
+		cost = float(cost)
+		gammas = float(gammas)
 		output_filepath = 'models'
 		if not os.path.isdir(output_filepath):
 			os.mkdir(output_filepath)
@@ -55,8 +58,9 @@ class model:
 
 			KNN = Pipeline([('scaler',preprocessing.StandardScaler()),
 				('KNN', KNeighborsClassifier(n_neighbors=15, algorithm='auto')) ])
+			param = {'C' : cost, 'gamma' : gammas}
 
-			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=128.0, gamma=0.0078125, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
+			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=cost, gamma=gammas, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
 			ET = Pipeline([('scaler', preprocessing.StandardScaler()),('Extra_Trees', ExtraTreesClassifier(n_estimators = 1000, max_depth=8, class_weight='balanced', random_state=42))])
 
 			base_classifiers = [ KNN , SVM, ET] 
@@ -115,15 +119,15 @@ class model:
 		self.hf_level.append(2  * np.multiply(self.precision_level[-1],self.recall_level[-1])/(self.precision_level[-1] + self.recall_level[-1]))
 
 	def evaluate_model(self, test_data, parent_classifiers):
-		pi_ti = 0
-		pi = 0
-		ti = 0
-		pi_ti_level = np.zeros(self.h.getHeight())
-		pi_level = np.zeros(self.h.getHeight())
-		ti_level = np.zeros(self.h.getHeight())
+		# pi_ti = 0
+		# pi = 0
+		# ti = 0
+		labels_test = []
+		# pi_ti_level = np.zeros(self.h.getHeight())
+		# pi_level = np.zeros(self.h.getHeight())
+		# ti_level = np.zeros(self.h.getHeight())
 
 		for i in range(len(test_data)):
 			c = lcpnb.lcpnb(self.h)
-			c.classify(test_data.iloc[i].values.reshape(1,-1),parent_classifiers)
-
-			self.labels_test.append((c.predicted))
+			predicted = c.classify(test_data.iloc[i].values.reshape(1,-1),parent_classifiers)
+		return predicted

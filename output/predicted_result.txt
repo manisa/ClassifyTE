@@ -1,9 +1,0 @@
-predicted	class_name
-1.4	LTR
-2.1	LTR
-1.4	LTR
-1.1	LTR
-2.1	LTR
-1.1	LTR
-1.1	LTR
-1.4	LTR

@@ -37,17 +37,17 @@ def main(algorithm, data):
 	print("---------------------------------------------Evaluation Started---------------------------------------------\n")
 	m = mo.model(h, algorithm)
 
-	m.evaluate_model(test_data, parent_classifiers)
+	labels_test = m.evaluate_model(test_data, parent_classifiers)
 
 	output_filename = "predicted_result.txt"
 	f = open(os.path.join(output_filepath, output_filename) ,'w')
-	f.write('predicted\t' + "class_name\n")
-	for i in range(len(m.labels_test)):
+	f.write('predicted\t')
+	#for i in labels_test:
 		#f.write(str(m.labels_test[i][0]) +  '\t ' + str(m.labels_test[i][1]) + '\n')
-		f.write(str(m.labels_test[i][1]) + '\t' + "LTR\n")
+	#	f.write(str(i))
 	f.close()
 
-	return m.labels_test
+	return labels_test
 
 
 
@@ -77,11 +77,24 @@ if __name__ == '__main__':
 
 	hier_label = {}
 	hier_label = main(options.algorithm, data)
-	for i in range(len(hier_label)):
-		print("The predicted hierarchy is \t")
-		print(str(hier_label[i][1]))
+
+
+	print("============================================================================================")
+	print("\n     Please follow the following naming convention for the predicted label hierarchy")
+	print("============================================================================================")
+
+	with open("./nodes/tree.txt", "r") as f:
+		content = f.readlines()
+		count = 0
+		for line in content:
+			print("{}".format(line.strip()))
+	f.close()
+	j = 1
+	for i in hier_label:
+		print("Prediction at Level{} : {}".format(j, i))
+		j = j +1
 	
 	elapsed_time = time.time() - start_time
 	print("\nTotal time elapsed in seconds\t", elapsed_time)
-	print("---------------------------------------------Done with Classification. Open Output folder to view the output file.---------------------------------------------")
+	
 

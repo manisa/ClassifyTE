@@ -45,5 +45,5 @@ class lcpnb:
 		self.predicted = predicteds[np.argmax(sum_probs)]
 		
 		self.predicted = [ c for c in self.predicted if not c.startswith('#') ]
-		print(self.predicted)
+		return self.predicted
 		

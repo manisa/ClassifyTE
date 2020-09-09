@@ -17,7 +17,7 @@ from HierStack import model as mo
 #from HierStack import classification as cl
 import HierStack.classification as cl
 
-def main(algorithm, X, Y, C, gamma):	
+def main(algorithm, X, Y, cost, gammas):	
 	index = 1
 	train_data = pd.concat([X, Y], axis=1)
 
@@ -29,7 +29,7 @@ def main(algorithm, X, Y, C, gamma):
 	dataInnerNode = h.getDataFromInnerNodes(train_data_parent)
 
 	m = mo.model(h, algorithm)
-	parent_classifiers1 = m.generate_models(dataInnerNode, index)
+	parent_classifiers1 = m.generate_models(dataInnerNode, index, cost, gammas)
 
 
 
