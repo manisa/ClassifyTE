@@ -43,7 +43,7 @@ conda activate ClassifyTE_env
 
 
 ## Download Models
-- Go to [this link](https://cs.uno.edu/~tamjid/Software.html)
+- Go to [this link](https://drive.google.com/drive/folders/1JqbE1bl9k54hMiS4ffCWfYZjcDiFU68b?usp=sharing)
 - Click on ClassifyTE_Models. This will automatically download models built with TE datasets.
 - Unzip and copy the folder *Models* into root folder *ClassifyTE".
 - Your directory structure should look like this:
@@ -51,14 +51,14 @@ conda activate ClassifyTE_env
 ```
 ClassifyTE/
 	Models/
-		ClassifyTE.pkl
+		Mixed.pkl
 		Repbase.pkl
 		MIPS.pkl
 
 ```
 
 ## Download datasets
-- Go to [this link](https://cs.uno.edu/~tamjid/Software.html)
+- Go to [this link](https://drive.google.com/drive/folders/1JqbE1bl9k54hMiS4ffCWfYZjcDiFU68b?usp=sharing)
 - Click on ClassifyTE_Datasets. This will automatically download models built with TE mixed dataset.
 - Unzip and copy the folder *Models* into root folder *ClassifyTE".
 - Your directory structure should look like this:
@@ -72,7 +72,6 @@ ClassifyTE/
 		
 
 ```
-- 
 ## Demo
 
 
@@ -89,8 +88,6 @@ Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, joel Atallah
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-##References
+## References
 -[1] Nakano, F.K., et al. Top-down Strategies for Hierarchical Classification of Tranposable Elelments with Neural Networks. In, IEEE. 2017.
 
