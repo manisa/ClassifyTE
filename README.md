@@ -126,7 +126,7 @@ python train.py -f repbase_features_TE_upto_6mer.csv -n node_repbase.txt -c 128.
 ```
 
 ## Authors
-Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, joel Atallah
+Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, Joel Atallah
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
