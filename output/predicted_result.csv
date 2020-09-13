@@ -1,19 +1,36 @@
 -----------------------Predictions-----------------------
 Level 1,Level 2,Level 3,Level 4
-1,1.1,1.1.3,
-1,1.1,1.1.3,
-1,1.1,1.1.1,
-1,1.1,1.1.1,
-2,2.1,
-1,1.1,1.1.1,
-1,1.1,1.1.3,
-1,1.1,1.1.3,
-1,1.1,1.1.1,
-1,1.1,1.1.2,
-1,1.1,1.1.3,
-2,2.1,
-1,1.4,1.4.1,
-2,2.1,2.1.1,2.1.1.8,
-1,1.1,1.1.2,
-2,2.1,2.1.1,2.1.1.9,
-1,1.4,1.4.5,
+Retrotransposon,LTR,Bel-Pao
+
+Retrotransposon,LTR,Bel-Pao
+
+Retrotransposon,LTR,Copia
+
+Retrotransposon,LTR,Copia
+
+DNA transposon,SubclassI
+
+Retrotransposon,LTR,Copia
+
+Retrotransposon,LTR,Bel-Pao
+
+Retrotransposon,LTR,Bel-Pao
+
+Retrotransposon,LTR,Copia
+
+Retrotransposon,LTR,gypsy
+
+Retrotransposon,LTR,Bel-Pao
+
+DNA transposon,SubclassI
+
+Retrotransposon,LINE,R2
+
+DNA transposon,SubclassI,TIRS,PIF-Harbinger
+
+Retrotransposon,LTR,gypsy
+
+DNA transposon,SubclassI,TIRS,CACTA
+
+Retrotransposon,LINE,I
+

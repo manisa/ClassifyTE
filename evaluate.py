@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import sys
 import os
+import csv
 import time
 import argparse
 from optparse import OptionParser
@@ -16,6 +17,26 @@ from HierStack import hierarchy as hie
 from HierStack import model as mo
 from HierStack import lcpnb as cl
 from HierStack.stackingClassifier import *
+
+
+def getLabel(content, predicted):
+	if predicted in content:
+		label = content[predicted]
+		label = label.strip("\n")
+		return label
+
+
+def getCodeLabel(lines):
+	content = dict()
+	code = []
+	label = []	
+	for line in lines:
+		data = line.split(",")
+		code.append(data[0])
+		label.append(data[1])
+	content = dict(zip(code,label))
+	return content
+
 
 def main(algorithm, data, modelname):
 	# ------------------------- Generate hierarcical classification for the sequence-----------------------------
@@ -65,21 +86,14 @@ if __name__ == '__main__':
 	with open(dataset_filepath + options.filename , "r") as csvfile:
 		data = pd.read_csv(csvfile, low_memory=False)
 
+	with open("./nodes/tree.txt", "r") as f:
+		lines = f.readlines()
+		content = getCodeLabel(lines)
+	f.close()
+	
 
 	hier_label = {}
 	hier_label = main(options.algorithm, data, options.modelname)
-
-
-	print("============================================================================================")
-	print("\n     Please follow the following naming convention for the predicted label hierarchy")
-	print("============================================================================================")
-
-	with open("./nodes/tree.txt", "r") as f:
-		content = f.readlines()
-		count = 0
-		for line in content:
-			print("{}".format(line.strip()))
-	f.close()
 
 	output_filepath = "output/"
 	output_filename = "predicted_result.csv"
@@ -92,10 +106,16 @@ if __name__ == '__main__':
 		count += 1
 		print("------------Prediction for {} TE sequence------------".format(count))
 		j = 1
+		predicted_labels = []
 		for i in k:
-			print("Prediction at Level{} : {}".format(j, i))
-			f.write(str(i) + ',')
+			label = getLabel(content,str(i))
+			predicted_labels.append(str(label))
+			print("Prediction at Level{} : {}".format(j, str(label)))
+			
+			#f.write(str(label) + ',')
 			j = j +1
+		wr = csv.writer(f, dialect='excel')
+		wr.writerow(predicted_labels)
 		f.write('\n')
 		print('\n')
 	f.close()

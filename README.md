@@ -83,8 +83,9 @@ ClassifyTE/
 - Then run following python command
 ```
 python generate_feature_file.py -f demo.fasta
-python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_repbase.pkl
+python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
 ```
+- check *predicted_result.csv* file inside *output* folder for prediction 
 
 ## Deployment
 To run the program on *new* TE sequence:

@@ -1,3 +1,7 @@
 models/
-data/
+data/mips+repbase_features_TE_upto_6mer.csv
+data/repbase_features_TE_upto_6mer.csv
+data/mips_features_TE_upto_6mer.csv
+data/pgsb_te.fasta
+data/repbase_te.fasta
 models_fold_1/
