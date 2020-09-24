@@ -42,9 +42,9 @@ conda activate ClassifyTE_env
 
 
 ## Download Models
-- Go to [this link](https://drive.google.com/file/d/10TNvTRuRSdDvw7FU_E_SV6vKkFB3jVzS/view?usp=sharing)
-- Click on ClassifyTE_Models. This will automatically download models built with TE datasets.
-- Unzip and copy the folder *models* into root folder *ClassifyTE".
+- Go to [this link](https://drive.google.com/file/d/1fwlAJOXQneXu4OMNVQhT17lpfmvvyYuU/view?usp=sharing).
+- Click on *ClassifyTE_Models.zip*. This will automatically download models built with TE datasets.
+- Unzip and copy all the models from "ClassifyTE_Models" directory into the folder *model* inside the root folder *ClassifyTE*.
 - Your directory structure should look like this:
 
 ```
@@ -56,9 +56,9 @@ ClassifyTE/
 ```
 
 ## Download datasets
-- Go to [this link](https://drive.google.com/file/d/10TNvTRuRSdDvw7FU_E_SV6vKkFB3jVzS/view?usp=sharing). Download the zipped file and unzip it.
-- Click on ClassifyTE_Datasets. This will automatically download models built with TE mixed dataset.
-- Unzip and copy the folder *data* into root folder *ClassifyTE*.
+- Go to [this link](https://drive.google.com/file/d/1vZKPjug1LsH75a7JdKKMi10ECTjUIwAm/view?usp=sharing).
+- Click on *ClassifyTE_Datasets.zip*. This will automatically download the datasets used to generate models.
+- Unzip and copy all the datasets from *ClassifyTE_Datasets* directory into the folder *data* inside the root folder *ClassifyTE*.
 - Your directory structure should look like this:
 
 ```
@@ -70,16 +70,14 @@ ClassifyTE/
 ```
 ## Demo
 To run the program on test TE sequence:
-- Create a folder named *data* inside *ClassifyTE*.
-- Place *demo.fasta* inside *data* folder.
-- Your directory structure should look like this
+- Your directory structure should look like this with the demo.fasta file.
 
 ```
 ClassifyTE/
 	data/
 		demo.fasta
 ```
-- Then run following python command
+- Then run following python command from the root directory.
 ```
 python generate_feature_file.py -f demo.fasta
 python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
@@ -131,5 +129,5 @@ Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, Joel Atallah
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## References
--[1] Nakano, F.K., et al. Top-down Strategies for Hierarchical Classification of Tranposable Elelments with Neural Networks. In, IEEE. 2017.
+[1] Nakano, F.K., et al. Top-down Strategies for Hierarchical Classification of Tranposable Elelments with Neural Networks. In, IEEE. 2017.
 
