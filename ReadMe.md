@@ -50,7 +50,7 @@ conda activate ClassifyTE_env
 ```
 ClassifyTE/
 	models/
-		ClassifyTE_mixed.pkl
+		ClassifyTE_combined.pkl
 		ClassifyTE_repbase.pkl
 		ClassifyTE_mips.pkl
 ```
