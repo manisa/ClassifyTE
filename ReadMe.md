@@ -15,7 +15,7 @@
 
 # Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. The instructions are tested in linux machine. 
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ conda activate ClassifyTE_env
 ## Download Models
 - Go to [this link](https://drive.google.com/file/d/1fwlAJOXQneXu4OMNVQhT17lpfmvvyYuU/view?usp=sharing).
 - Click on *ClassifyTE_Models.zip*. This will automatically download models built with TE datasets.
-- Unzip and copy all the models from "ClassifyTE_Models" directory into the folder *model* inside the root folder *ClassifyTE*.
+- Unzip and copy all the models from "ClassifyTE_Models" directory into the folder *models* inside the root folder *ClassifyTE*.
 - Your directory structure should look like this:
 
 ```
