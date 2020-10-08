@@ -110,7 +110,7 @@ if __name__ == '__main__':
 		for i in k:
 			label = getLabel(content,str(i))
 			predicted_labels.append(str(label))
-			print("Prediction at Level{} : {}".format(j, str(label)))
+			print("Prediction at Level {} : {}".format(str(i), str(label)))
 			
 			#f.write(str(label) + ',')
 			j = j +1
