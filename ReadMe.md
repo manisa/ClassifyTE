@@ -36,7 +36,7 @@ cd ClassifyTE
 
 - Create and activate the virtual environment with python dependendencies
 ```
-conda env create -f environment.yml
+conda env create -f environment.yml python==3.7
 conda activate ClassifyTE_env
 ```
 
