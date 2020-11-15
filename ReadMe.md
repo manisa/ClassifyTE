@@ -77,12 +77,28 @@ ClassifyTE/
 	data/
 		demo.fasta
 ```
-- Then run following python command from the root directory.
+- Firstly, Run following python command from the root directory to generate feature file.
 ```
 python generate_feature_file.py -f demo.fasta
+```
+
+####Parameters
+For **generate_feature_file.py**, the user has to provide two parameters:
+- -f for fasta filename from  **data** directory.
+- -o for resulting feature file name with **.csv** extension [**Optional**]  [By default the feature filename is **feature_file.csv**.]
+
+- Then run following python command from the root directory to get the prediction on new TE sequences. Prior following command, please make sure that all the model files have already been added to **models** directory. 
+
+```
 python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
 ```
-- check **predicted_result.csv** file inside **output** folder for prediction 
+####Parameters
+For **evaluate.py**, the user has to provide following parameters:
+- -f for feature file name which is by default "feature_file.csv" unless user have provided a feature filename in earlier step.
+- -n for node filename which is by default "node.txt". Node file consists of numerical representation of taxonomy of the dataset. Please check nodes folder for other node files for each dataset.
+- -m for model filename which has **.pkl** as file extension. All the model files must have been added in **models** directory.
+
+- Finally, check **predicted_result.csv** file inside **output** folder for predicted label of the TE sequence/s.
 
 ## Deployment
 To run the program on **new** TE sequence:
