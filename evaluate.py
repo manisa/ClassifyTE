@@ -74,7 +74,7 @@ def main(algorithm, data, modelname):
 if __name__ == '__main__':
 
 	parser = OptionParser()
-	parser.add_option("-f", "--filename", dest="filename", help="Name of the training file.")
+	parser.add_option("-f", "--filename", dest="filename", help="Name of the feature file.", default="feature_file.csv")
 	parser.add_option("-n", "--node_file", dest="node_file", help="Path to node filelist.", default="node.txt")
 	parser.add_option("-m", "--modelname", dest="modelname", help="Model name")
 	

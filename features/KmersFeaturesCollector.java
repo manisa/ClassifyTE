@@ -22,7 +22,6 @@ public class KmersFeaturesCollector {
 		//System.out.println(listfilePath);
 		BufferedReader list_rd = BufferReaderAndWriter.getReader(new File(listfilePath));
 		String id = "";
-		
 		String output_feature_file_path = curr_dir_path+"/feature_file.csv";
 		FileWriter output_feature_file = new FileWriter(output_feature_file_path, true);
 		BufferedWriter feature_bw = new BufferedWriter(output_feature_file);

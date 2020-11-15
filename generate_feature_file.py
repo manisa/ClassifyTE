@@ -9,7 +9,7 @@ import shutil
 from optparse import OptionParser
 from shutil import copy2
 
-def feature_generation(curr_dir1):
+def feature_generation(curr_dir1,output_file):
 	#copy list.txt to features/ and  features/kanalyze-2.0.0/code
 	feature_destpath = curr_dir1 + "/features/" 
 	kanalyzer_destpath = feature_destpath + "kanalyze-2.0.0/code/"
@@ -56,14 +56,14 @@ def feature_generation(curr_dir1):
 	subprocess.run(['javac','KmersFeaturesCollector.java'])
 	subprocess.run(['javac','BufferReaderAndWriter.java'])
 	subprocess.run(['java', 'KmersFeaturesCollector'])
-
+	subprocess.run(['mv', 'feature_file.csv', output_file])
 	
 	curr_dir2 = os.getcwd()
 	change_dir = os.chdir(curr_dir1)
 	data_dir = 'data/'
-	shutil.copy2(curr_dir2+'/feature_file.csv', data_dir+'feature_file.csv')
+	shutil.copy2(curr_dir2+'/' + output_file, data_dir+output_file)
 	change_dir = os.chdir(feature_destpath)
-	subprocess.run(['rm', 'feature_file.csv'])
+	subprocess.run(['rm', output_file])
 	change_dir = os.chdir(curr_dir1)
 
 	
@@ -116,10 +116,12 @@ def main():
 	curr_dir1 = os.getcwd()
 	parser = OptionParser()
 
-	parser.add_option("-f", "--filename", dest="filename", help="Name of the training file.")
+	parser.add_option("-f", "--filename", dest="filename", help="Name of the fasta file.")
+	parser.add_option("-o", "--output", dest="output_filename", help="Name of feature file", default="feature_file.csv")
 	#parser.add_option("-m", "--modelname", dest="modelname", help="Model name")
 	(options, args) = parser.parse_args()
 	fasta_file = options.filename
+	output_file = options.output_filename
 	get_data(fasta_file)
 
 
@@ -140,7 +142,7 @@ def main():
 	# 	f.write(str(te_id)+ ".fasta")
 	# f.close()
 
-	feature_generation(curr_dir1)
+	feature_generation(curr_dir1,output_file)
 	#subprocess.run(['python', 'evaluate.py','-f','feature_file.csv','-n','node.txt', 'm', ''])
 	
 
