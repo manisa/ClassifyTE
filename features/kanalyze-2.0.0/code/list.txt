@@ -1,0 +1,6 @@
+seq1.fasta
+seq2.fasta
+seq3.fasta
+seq4.fasta
+seq5.fasta
+seq6.fasta

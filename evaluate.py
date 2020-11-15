@@ -7,9 +7,7 @@ import time
 import argparse
 from optparse import OptionParser
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.model_selection import train_test_split
+
 
 
 import pickle
@@ -18,6 +16,18 @@ from HierStack import model as mo
 from HierStack import lcpnb as cl
 from HierStack.stackingClassifier import *
 
+def getSequenceName(curr_dir):
+	input_files_dir = curr_dir+"/features/kanalyze-2.0.0/input_data/"
+	_, _, files = next(os.walk(input_files_dir))
+	files = sorted(files)
+	seqIDs = []
+	for file in files:
+		f = open(input_files_dir + file,"r")
+		header = f.readline()
+		head = header.split(">")
+		ID = head[1]
+		seqIDs.append(ID)
+	return seqIDs
 
 def getLabel(content, predicted):
 	if predicted in content:
@@ -79,6 +89,7 @@ if __name__ == '__main__':
 	curr_dir1 = os.getcwd()
 	dataset_filepath = curr_dir1 + "/data/"
 	node_filepath = curr_dir1 + "/nodes/"
+	seq_names = getSequenceName(curr_dir1)
 	
 	h = hie.hierarchy(node_filepath + options.node_file)
 	start_time = time.time()
@@ -96,28 +107,39 @@ if __name__ == '__main__':
 	hier_label = main(options.algorithm, data, options.modelname)
 
 	output_filepath = "output/"
-	output_filename = "predicted_result.csv"
+	output_filename = "predicted_result.txt"
 	f = open(os.path.join(output_filepath, output_filename) ,'w')
-	f.write('-----------------------Predictions-----------------------\n')
-	f.write('Level 1,' + 'Level 2,' + 'Level 3,' + 'Level 4' + '\n' )
+	f.write('--------------------------------Predictions--------------------------------\n')
+	f.write('\n')
+	
 	
 	count = 0
 	for k in hier_label:
-		count += 1
-		print("------------Prediction for {} TE sequence------------".format(count))
+		name = str(seq_names[count])
+		print("Prediction for TE sequence of ID: {}".format(name))
+		f.write("Prediction for TE sequence of ID: {}".format(name))
 		j = 1
 		predicted_labels = []
 		for i in k:
-			label = getLabel(content,str(i))
+			label = getLabel(content,str(i))	
 			predicted_labels.append(str(label))
-			print("Prediction at Level {} : {}".format(str(i), str(label)))
-			
+			print("Predicted level {} : {}".format(str(i), str(label)))
+			f.write("Predicted level {} : {}".format(str(i), str(label)))
+			f.write("\n")
 			#f.write(str(label) + ',')
 			j = j +1
-		wr = csv.writer(f, dialect='excel')
-		wr.writerow(predicted_labels)
-		f.write('\n')
+		# wr = csv.writer(f, dialect='excel')
+		# f.write(str("TE Sequence ID: " + name)
+		# f.write('Level 1,' + 'Level 2,' + 'Level 3,' + 'Level 4' + '\n' )
+		# wr.writerow(predicted_labels)
+		f.write("Final label of TE sequence is {}".format(label))
+		f.write('\n\n')
+		f.write('###############################################################')
+		f.write('\n\n')
 		print('\n')
+		print('###############################################################')
+		print('\n')
+		count +=1
 	f.close()
 	elapsed_time = time.time() - start_time
 	print("\nTotal time elapsed in seconds\t", elapsed_time)

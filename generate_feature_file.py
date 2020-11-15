@@ -82,25 +82,26 @@ def get_data(fasta_file):
 		os.mkdir(kanalyzer_input_destpath)
 
 	sequence = ""
-	with open(data_filepath+ fasta_file, 'rt') as fp: 
+	with open(data_filepath + fasta_file, 'rt') as fp: 
 		content = fp.read()
 		data = content.split(">")
 		#print(data)
 		i=0
 		for line in data:
-			meta = line.strip("\n")
+			meta = line
 			if meta != "":
-				of = open(kanalyzer_input_destpath + "seq" + str(i+1)+".fasta" ,"w")
+				i+=1
+				of = open(kanalyzer_input_destpath + "seq" + str(i)+".fasta" ,"w")
 				of.write(">" + meta)
-				i=i+1
 				of.close()
 	fp.close()
 	curr_dir2 = os.getcwd() + "/features/kanalyze-2.0.0/input_data/"
 	change_dir = os.chdir(curr_dir2)
-	files = [f for f in os.listdir('.') if os.path.isfile(f)]
+	#files = [f for f in os.listdir('.') if os.path.isfile(f)]
+	_, _, files = next(os.walk(curr_dir2))
+	files = sorted(files)
 	with open("list.txt", "w") as ff:
 		for f in files:
-			#print(f)
 			ff.write(f)
 			ff.write('\n')
 	ff.close()

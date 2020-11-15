@@ -17,6 +17,10 @@ with open(list, 'rt') as fp:
 		#print(first_file)
 		with open(input_path + first_file, 'rt') as file:
 			header = file.readline()
+			print(header)
+			head = header.split(">")
+			ID = head[1]
+			print(ID)		
 			type = header.split("|")
 			label = type[1].rstrip("\n")
 			with open(output_path + "label.csv", 'a') as rep:
