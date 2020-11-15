@@ -43,8 +43,8 @@ conda activate ClassifyTE_env
 
 ## Download Models
 - Go to [this link](https://drive.google.com/file/d/1fwlAJOXQneXu4OMNVQhT17lpfmvvyYuU/view?usp=sharing).
-- Click on *ClassifyTE_Models.zip*. This will automatically download models built with TE datasets.
-- Unzip and copy all the models from "ClassifyTE_Models" directory into the folder *model* inside the root folder *ClassifyTE*.
+- Click on **ClassifyTE_Models.zip**. This will automatically download models built with TE datasets.
+- Unzip and copy all the models from "ClassifyTE_Models" directory into the folder **model** inside the root folder **ClassifyTE**.
 - Your directory structure should look like this:
 
 ```
@@ -57,8 +57,8 @@ ClassifyTE/
 
 ## Download datasets
 - Go to [this link](https://drive.google.com/file/d/1vZKPjug1LsH75a7JdKKMi10ECTjUIwAm/view?usp=sharing).
-- Click on *ClassifyTE_Datasets.zip*. This will automatically download the datasets used to generate models.
-- Unzip and copy all the datasets from *ClassifyTE_Datasets* directory into the folder *data* inside the root folder *ClassifyTE*.
+- Click on **ClassifyTE_Datasets.zip**. This will automatically download the datasets used to generate models.
+- Unzip and copy all the datasets from **ClassifyTE_Datasets** directory into the folder **data** inside the root folder **ClassifyTE**.
 - Your directory structure should look like this:
 
 ```
@@ -82,12 +82,12 @@ ClassifyTE/
 python generate_feature_file.py -f demo.fasta
 python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
 ```
-- check *predicted_result.csv* file inside *output* folder for prediction 
+- check **predicted_result.csv** file inside **output** folder for prediction 
 
 ## Deployment
-To run the program on *new* TE sequence:
-- Create a folder named *data* inside *ClassifyTE*.
-- Place your fasta file (with single or multiple fasta sequences) inside *data* folder.
+To run the program on **new** TE sequence:
+- Create a folder named **data** inside **ClassifyTE**.
+- Place your fasta file (with single or multiple fasta sequences) inside **data** folder.
 - Your directory structure should look like this
 
 ```
@@ -101,13 +101,13 @@ python generate_feature_file.py -f your_fasta_file -o your_feature_file_name
 python evaluate.py -f feature_file.csv -n node.txt -m your_choice_of_model
 ```
 For "generate_feature_file.py", the user has to provide two parameters:
-- -f for filename of fasta file that has been added in *data* directory.
-- -o for filename of feature file with *.csv* extension to be created at the end of execution. [If this parameter is not provided, the default feature filename would be *feature_file.csv*.]
+- -f for filename of fasta file that has been added in **data** directory.
+- -o for filename of feature file with **.csv** extension to be created at the end of execution. [If this parameter is not provided, the default feature filename would be **feature_file.csv**.]
 
 For "evaluate.py", the user has to provide following parameters:
 - -f for feature file name which is by default "feature_file.csv" unless user have provided a feature filename in earlier step.
-- -n for node filename which is by default "node.txt". Node file consists of hierarchical representation of the datasets. Please check nodes folder for other node files for each dataset.
-- -m for model filename which has *.pkl* as file extension. All the model files must be added in *models* directory.
+- -n for node filename which is by default "node.txt". Node file consists of numerical representation of taxonomy of the dataset. Please check nodes folder for other node files for each dataset.
+- -m for model filename which has **.pkl** as file extension. All the model files must be added in **models** directory.
 
 ## Training
 - To replicate the training procedure, follow following command line
@@ -116,7 +116,7 @@ python train.py -f csv_file_name -n txt_node_file -c SVM_cost_parameter -g SVM_g
 ```
 For "train.py", the user has to provide following parameters:
 - -f for feature file name.
-- -n for node filename. Node file consists of hierarchical representation of the datasets.
+- -n for node filename. Node file consists of numerical representation of taxonomy of the dataset.
 - -c for cost parameter of SVM with RBF kernel
 - -g for gamma parameter of SVM with RBF kernel
 
@@ -126,7 +126,7 @@ For PGSB dataset : C=32, gamma=0.03125
 For REPBASE dataset : C=128.0, gamma=0.0078125
 For mixed dataset : C=512.0, gamma=0.0078125
 ```
-- Under *node* directory you will find three files. These files consists of all the nodes in each of the corresponding datasets. 
+- Under **node** directory you will find three files. These files consists of all the nodes in each of the corresponding datasets. 
 	1.	node_pgsb.txt 
 	2.	node_repbase.txt
 	3.	node.txt
