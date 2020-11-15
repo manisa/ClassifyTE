@@ -82,7 +82,7 @@ ClassifyTE/
 python generate_feature_file.py -f demo.fasta
 ```
 
-####Parameters
+#### Parameters
 For **generate_feature_file.py**, the user has to provide two parameters:
 - -f for fasta filename from  **data** directory.
 - -o for resulting feature file name with **.csv** extension [**Optional**]  [By default the feature filename is **feature_file.csv**.]
@@ -92,7 +92,7 @@ For **generate_feature_file.py**, the user has to provide two parameters:
 ```
 python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
 ```
-####Parameters
+#### Parameters
 For **evaluate.py**, the user has to provide following parameters:
 - -f for feature file name which is by default "feature_file.csv" unless user have provided a feature filename in earlier step.
 - -n for node filename which is by default "node.txt". Node file consists of numerical representation of taxonomy of the dataset. Please check nodes folder for other node files for each dataset.
