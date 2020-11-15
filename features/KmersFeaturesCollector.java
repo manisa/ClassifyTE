@@ -97,7 +97,7 @@ public class KmersFeaturesCollector {
 		while((id = list_rd.readLine())!=null){
 			
 			String two_mer_file = curr_dir_path+"/kanalyze-2.0.0/output_data/2mer/"+id+".txt";
-			System.out.println(two_mer_file);
+//			System.out.println(two_mer_file);
 			String three_mer_file = curr_dir_path+"/kanalyze-2.0.0/output_data/3mer/"+id+".txt";
 			String four_mer_file = curr_dir_path+"/kanalyze-2.0.0/output_data/4mer/"+id+".txt";
 			

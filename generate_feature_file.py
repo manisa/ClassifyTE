@@ -21,11 +21,24 @@ def feature_generation(curr_dir1):
 	mer3_dir = kanalyzer_output_destpath + '3mer/'
 	mer4_dir = kanalyzer_output_destpath + '4mer/'
 
-	if not os.path.isdir(mer2_dir):
+
+
+	if os.path.isdir(mer2_dir):
+		subprocess.run(['rm','-R',kanalyzer_output_destpath + '2mer'])
 		os.mkdir(mer2_dir)
-	if not os.path.isdir(mer3_dir):
+	else:
+		os.mkdir(mer2_dir)
+
+	if os.path.isdir(mer3_dir):
+		subprocess.run(['rm','-R',kanalyzer_output_destpath + '3mer'])
 		os.mkdir(mer3_dir)
-	if not os.path.isdir(mer4_dir):
+	else:
+		os.mkdir(mer3_dir)
+
+	if os.path.isdir(mer4_dir):
+		subprocess.run(['rm','-R',kanalyzer_output_destpath + '4mer'])
+		os.mkdir(mer4_dir)
+	else:
 		os.mkdir(mer4_dir)
 
 	#chmod 775 runKanalyzer_generate_all_features and run this script
@@ -39,18 +52,20 @@ def feature_generation(curr_dir1):
 
 	change_dir = os.chdir(feature_destpath)
 	
+	
 	subprocess.run(['javac','KmersFeaturesCollector.java'])
 	subprocess.run(['javac','BufferReaderAndWriter.java'])
 	subprocess.run(['java', 'KmersFeaturesCollector'])
 
+	
 	curr_dir2 = os.getcwd()
 	change_dir = os.chdir(curr_dir1)
 	data_dir = 'data/'
 	shutil.copy2(curr_dir2+'/feature_file.csv', data_dir+'feature_file.csv')
 	change_dir = os.chdir(feature_destpath)
-
 	subprocess.run(['rm', 'feature_file.csv'])
 	change_dir = os.chdir(curr_dir1)
+
 	
 
 def get_data(fasta_file):
@@ -60,18 +75,26 @@ def get_data(fasta_file):
 	kanalyzer_destpath = feature_destpath + "kanalyze-2.0.0/code/"
 	kanalyzer_input_destpath = feature_destpath + "kanalyze-2.0.0/input_data/"
 
+	if os.path.isdir(kanalyzer_input_destpath):
+		subprocess.run(['rm','-R',kanalyzer_input_destpath])
+		os.mkdir(kanalyzer_input_destpath)
+	else:
+		os.mkdir(kanalyzer_input_destpath)
+
 	sequence = ""
 	with open(data_filepath+ fasta_file, 'rt') as fp: 
 		content = fp.read()
 		data = content.split(">")
+		#print(data)
 		i=0
 		for line in data:
-			meta = line
-			of = open(kanalyzer_input_destpath + "seq" + str(i)+".fasta" ,"w")
-			of.write(">" + meta)
-			i=i+1
+			meta = line.strip("\n")
+			if meta != "":
+				of = open(kanalyzer_input_destpath + "seq" + str(i+1)+".fasta" ,"w")
+				of.write(">" + meta)
+				i=i+1
+				of.close()
 	fp.close()
-	of.close()
 	curr_dir2 = os.getcwd() + "/features/kanalyze-2.0.0/input_data/"
 	change_dir = os.chdir(curr_dir2)
 	files = [f for f in os.listdir('.') if os.path.isfile(f)]

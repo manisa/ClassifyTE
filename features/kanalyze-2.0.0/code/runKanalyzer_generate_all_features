@@ -2,7 +2,6 @@
 #purpose: run Kmer counter
 #author: Manisha
 
-#kanalyzer_path="/home/manisha/kmers/ordering/kanalyze-2.0.0/";
 input_path="../input_data/"
 
 output_path2mer="../output_data/2mer/"
