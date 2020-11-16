@@ -154,8 +154,8 @@ For combined dataset : C=512.0, gamma=0.0078125
 ```
 
 ##### nodes 
-- Under **node** directory you will find three files. These files consists of all the nodes in each of the corresponding datasets. 
-	1.	node_pgsb.txt for pgsb daset
+- Under **node** directory you will find three files. These files consists of all the nodes in each of the corresponding datasets. These node files consist of numerical representation of taxonomy in the datasets.
+	1.	node_pgsb.txt for pgsb dataset
 	2.	node_repbase.txt for repase dataset
 	3.	node.txt for combined dataset
 
