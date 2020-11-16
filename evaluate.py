@@ -126,12 +126,7 @@ if __name__ == '__main__':
 			print("Predicted level {} : {}".format(str(i), str(label)))
 			f.write("Predicted level {} : {}".format(str(i), str(label)))
 			f.write("\n")
-			#f.write(str(label) + ',')
 			j = j +1
-		# wr = csv.writer(f, dialect='excel')
-		# f.write(str("TE Sequence ID: " + name)
-		# f.write('Level 1,' + 'Level 2,' + 'Level 3,' + 'Level 4' + '\n' )
-		# wr.writerow(predicted_labels)
 		f.write("Final label of TE sequence is {}".format(label))
 		f.write('\n\n')
 		f.write('###############################################################')
