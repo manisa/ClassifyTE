@@ -128,7 +128,7 @@ python evaluate.py -f your_feature_file_name -n node.txt -m ClassifyTE_combined.
 #### *Parameters*
 For **evaluate.py**, the user has to provide following parameters:
 - -f for feature file name which is by default *feature_file.csv* unless user have provided a feature filename in earlier step.
-- -n for node filename which is by default *node.txt*. Node file consists of numerical representation of taxonomy of the dataset. Each node file is associated with the respective models trained on respective datasets. Please check [below](#nodes) section for details.
+- -n for node filename which is by default *node.txt*. Node file consists of numerical representation of taxonomy of the dataset. Each node file is associated with the respective models trained on respective datasets. Please check below under **nodes** section for details.
 - -m for model filename which has **.pkl** as file extension. All the model files must have been added in **models** directory.
 
 - Finally, check **predicted_result.csv** file inside **output** folder for predicted label of the TE sequence/s.
@@ -150,14 +150,14 @@ For **train.py**, the user has to provide following parameters:
 ```
 For PGSB dataset : C=32, gamma=0.03125
 For REPBASE dataset : C=128.0, gamma=0.0078125
-For mixed dataset : C=512.0, gamma=0.0078125
+For combined dataset : C=512.0, gamma=0.0078125
 ```
 
 ##### nodes 
 - Under **node** directory you will find three files. These files consists of all the nodes in each of the corresponding datasets. 
-	1.	node_pgsb.txt 
-	2.	node_repbase.txt
-	3.	node.txt
+	1.	node_pgsb.txt for pgsb daset
+	2.	node_repbase.txt for repase dataset
+	3.	node.txt for combined dataset
 
 - If you would like to train the model on your machine, the training example would look like as below:
 ```
