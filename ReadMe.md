@@ -82,7 +82,7 @@ ClassifyTE/
 python generate_feature_file.py -f demo.fasta
 ```
 
-#### Parameters
+#### *Parameters*
 For **generate_feature_file.py**, the user has to provide two parameters:
 - -f for fasta filename from  **data** directory.
 - -o for resulting feature file name with **.csv** extension [**Optional**]  [By default the feature filename is **feature_file.csv**.]
@@ -92,7 +92,7 @@ For **generate_feature_file.py**, the user has to provide two parameters:
 ```
 python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
 ```
-#### Parameters
+#### *Parameters*
 For **evaluate.py**, the user has to provide following parameters:
 - -f for feature file name which is by default "feature_file.csv" unless user have provided a feature filename in earlier step.
 - -n for node filename which is by default "node.txt". Node file consists of numerical representation of taxonomy of the dataset. Please check nodes folder for other node files for each dataset.
@@ -102,7 +102,6 @@ For **evaluate.py**, the user has to provide following parameters:
 
 ## Deployment
 To run the program on **new** TE sequence:
-- Create a folder named **data** inside **ClassifyTE**.
 - Place your fasta file (with single or multiple fasta sequences) inside **data** folder.
 - Your directory structure should look like this
 
@@ -111,25 +110,36 @@ ClassifyTE/
 	data/
 		[your_fasta_file]
 ```
-- Then run following python command
+- Firstly, Run following python command from the root directory to generate feature file.
 ```
-python generate_feature_file.py -f your_fasta_file -o your_feature_file_name
-python evaluate.py -f feature_file.csv -n node.txt -m your_choice_of_model
+python generate_feature_file.py -f demo.fasta
 ```
-For "generate_feature_file.py", the user has to provide two parameters:
-- -f for filename of fasta file that has been added in **data** directory.
-- -o for filename of feature file with **.csv** extension to be created at the end of execution. [If this parameter is not provided, the default feature filename would be **feature_file.csv**.]
 
-For "evaluate.py", the user has to provide following parameters:
+#### *Parameters*
+For **generate_feature_file.py**, the user has to provide two parameters:
+- -f for fasta filename from  **data** directory.
+- -o for resulting feature file name with **.csv** extension [**Optional**]  [By default the feature filename is **feature_file.csv**.]
+
+- Then run following python command from the root directory to get the prediction on new TE sequences. Prior following command, please make sure that all the model files have already been added to **models** directory. 
+
+```
+python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
+```
+#### *Parameters*
+For **evaluate.py**, the user has to provide following parameters:
 - -f for feature file name which is by default "feature_file.csv" unless user have provided a feature filename in earlier step.
 - -n for node filename which is by default "node.txt". Node file consists of numerical representation of taxonomy of the dataset. Please check nodes folder for other node files for each dataset.
-- -m for model filename which has **.pkl** as file extension. All the model files must be added in **models** directory.
+- -m for model filename which has **.pkl** as file extension. All the model files must have been added in **models** directory.
+
+- Finally, check **predicted_result.csv** file inside **output** folder for predicted label of the TE sequence/s.
 
 ## Training
 - To replicate the training procedure, follow following command line
 ```
 python train.py -f csv_file_name -n txt_node_file -c SVM_cost_parameter -g SVM_gamma_parameter
 ```
+
+#### *Parameters*
 For "train.py", the user has to provide following parameters:
 - -f for feature file name.
 - -n for node filename. Node file consists of numerical representation of taxonomy of the dataset.
