@@ -2,3 +2,5 @@ models/
 models_fold_1/
 data/
 features/
+results/
+CV-Results/
