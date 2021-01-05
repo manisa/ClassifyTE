@@ -16,6 +16,8 @@ from HierStack import classification as cl
 from HierStack  import lcpnb as lcpnb
 from HierStack import stackingClassifier as Stack
 
+#C=32, gamma=0.03125
+#C=512.0, gamma=0.0078125
 
 class model:
 	def __init__(self, h, algo):
@@ -27,17 +29,16 @@ class model:
 		self.precision_level = []
 		self.recall_level = self.hf_level = []
 		self.labels_test = []
+		self.evaluate_labels_test = [] 
 
-	def generate_models(self, dataInnerNode,kmer):
-        #output_filepath = 'models'
-        #if not os.path.isdir(output_filepath):
-         #   os.mkdir(output_filepath)
-           #parent_models = "parent_models" + "_" + str(n) + ".dat"
-		output_filepath = 'Models'
+	def generate_models(self, dataInnerNode, index, cost, gammas):
+		cost = float(cost)
+		gammas = float(gammas)
+		output_filepath = 'models'
 		if not os.path.isdir(output_filepath):
 			os.mkdir(output_filepath)
 
-		pkl_filename = "pickle_model_" + str(kmer) + ".pkl"
+		pkl_filename = "ClassifyTE" + ".pkl"
 		i = 0
 		parent_classifiers = {}
 		for node in dataInnerNode:
@@ -53,9 +54,20 @@ class model:
 
 			node_label = node_dataset['classification']
 			node_label = pd.DataFrame(node_label.iloc[node_data.index.values])      
-    
-			clf = Pipeline([('scaler',preprocessing.StandardScaler()),
-				('LogReg', LogisticRegression(solver='lbfgs', multi_class='multinomial', class_weight="balanced", max_iter=120000, n_jobs=-1)) ])
+   			
+
+			KNN = Pipeline([('scaler',preprocessing.StandardScaler()),
+				('KNN', KNeighborsClassifier(n_neighbors=15, algorithm='auto')) ])
+			param = {'C' : cost, 'gamma' : gammas}
+
+			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=cost, gamma=gammas, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
+			ET = Pipeline([('scaler', preprocessing.StandardScaler()),('Extra_Trees', ExtraTreesClassifier(n_estimators = 1000, max_depth=8, class_weight='balanced', random_state=42))])
+
+			base_classifiers = [ KNN , SVM, ET] 
+          
+			meta_classifier = Pipeline([('scaler', preprocessing.StandardScaler()),('Log_Reg', LogisticRegression(solver='lbfgs', multi_class='multinomial', class_weight="balanced", max_iter=120000, n_jobs=-1) )])
+            
+			clf = Stack.StackingClassifier(classifiers =base_classifiers,  meta_classifier =meta_classifier)
 
 
 
@@ -65,7 +77,7 @@ class model:
 			if len(np.unique(node_label.values))==1:
 				parent_classifiers[node] = str(np.unique(node_label.values)[0])
 			else:
-				parent_classifiers[node] = clf.fit(X,y)
+				parent_classifiers[node] = clf.fit(X,y,node,index)
 			
 		
         #---------------------- Save Models to files---------------------------
@@ -105,3 +117,18 @@ class model:
 		self.precision_level.append(pi_ti_level/pi_level)
 		self.recall_level.append(pi_ti_level/ti_level)
 		self.hf_level.append(2  * np.multiply(self.precision_level[-1],self.recall_level[-1])/(self.precision_level[-1] + self.recall_level[-1]))
+
+	def evaluate_model(self, test_data, parent_classifiers):
+		# pi_ti = 0
+		# pi = 0
+		# ti = 0
+		labels_evaluate = []
+		# pi_ti_level = np.zeros(self.h.getHeight())
+		# pi_level = np.zeros(self.h.getHeight())
+		# ti_level = np.zeros(self.h.getHeight())
+
+		for i in range(len(test_data)):
+			c = lcpnb.lcpnb(self.h)
+			predicted = c.classify(test_data.iloc[i].values.reshape(1,-1),parent_classifiers)
+			labels_evaluate.append(predicted)
+		return labels_evaluate

@@ -16,12 +16,9 @@ def feature_generation(curr_dir1,output_file):
 	kanalyzer_input_destpath = feature_destpath + "kanalyze-2.0.0/input_data/"
 	kanalyzer_output_destpath = feature_destpath + "kanalyze-2.0.0/output_data/"
 
-
 	mer2_dir = kanalyzer_output_destpath + '2mer/'
 	mer3_dir = kanalyzer_output_destpath + '3mer/'
 	mer4_dir = kanalyzer_output_destpath + '4mer/'
-
-
 
 	if os.path.isdir(mer2_dir):
 		subprocess.run(['rm','-R',kanalyzer_output_destpath + '2mer'])
@@ -56,7 +53,9 @@ def feature_generation(curr_dir1,output_file):
 	subprocess.run(['javac','KmersFeaturesCollector.java'])
 	subprocess.run(['javac','BufferReaderAndWriter.java'])
 	subprocess.run(['java', 'KmersFeaturesCollector'])
-	subprocess.run(['mv', 'feature_file.csv', output_file])
+
+	if not output_file == "feature_file.csv":
+		subprocess.run(['mv', 'feature_file.csv', output_file])
 	
 	curr_dir2 = os.getcwd()
 	change_dir = os.chdir(curr_dir1)
@@ -74,12 +73,19 @@ def get_data(fasta_file):
 	feature_destpath = curr_dir1 + "/features/" 
 	kanalyzer_destpath = feature_destpath + "kanalyze-2.0.0/code/"
 	kanalyzer_input_destpath = feature_destpath + "kanalyze-2.0.0/input_data/"
+	kanalyzer_output_destpath = feature_destpath + "kanalyze-2.0.0/output_data/"
 
 	if os.path.isdir(kanalyzer_input_destpath):
 		subprocess.run(['rm','-R',kanalyzer_input_destpath])
 		os.mkdir(kanalyzer_input_destpath)
 	else:
 		os.mkdir(kanalyzer_input_destpath)
+
+	if os.path.isdir(kanalyzer_output_destpath):
+		subprocess.run(['rm','-R',kanalyzer_output_destpath])
+		os.mkdir(kanalyzer_output_destpath)
+	else:
+		os.mkdir(kanalyzer_output_destpath)
 
 	sequence = ""
 	with open(data_filepath + fasta_file, 'rt') as fp: 
