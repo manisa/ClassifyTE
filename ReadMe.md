@@ -55,19 +55,6 @@ ClassifyTE/
 		ClassifyTE_mips.pkl
 ```
 
-## Download datasets
-- Go to [this link](https://drive.google.com/file/d/1vZKPjug1LsH75a7JdKKMi10ECTjUIwAm/view?usp=sharing).
-- Click on **ClassifyTE_Datasets.zip**. This will automatically download the datasets used to generate models.
-- Unzip and copy all the datasets from **ClassifyTE_Datasets** directory into the folder **data** inside the root folder **ClassifyTE**.
-- Your directory structure should look like this:
-
-```
-ClassifyTE/
-	data/
-		mips_features_TE_upto_6mer.csv
-		repbase_features_TE_upto_6mer.csv
-		mips+repbase_features_TE_upto_6mer.csv
-```
 ## Demo
 To run the program on test TE sequence:
 - Your directory structure should look like this with the demo.fasta file.
@@ -132,6 +119,20 @@ For **evaluate.py**, the user has to provide following parameters:
 - -m for model filename which has **.pkl** as file extension. All the model files must have been added in **models** directory.
 
 - Finally, check **predicted_result.csv** file inside **output** folder for predicted label of the TE sequence/s.
+
+## Download datasets
+- Go to [this link](https://drive.google.com/file/d/1vZKPjug1LsH75a7JdKKMi10ECTjUIwAm/view?usp=sharing).
+- Click on **ClassifyTE_Datasets.zip**. This will automatically download the datasets used to generate models.
+- Unzip and copy all the datasets from **ClassifyTE_Datasets** directory into the folder **data** inside the root folder **ClassifyTE**.
+- Your directory structure should look like this:
+
+```
+ClassifyTE/
+	data/
+		mips_features_TE_upto_6mer.csv
+		repbase_features_TE_upto_6mer.csv
+		mips+repbase_features_TE_upto_6mer.csv
+```
 
 ## Training
 - To replicate the training procedure, follow following command line
