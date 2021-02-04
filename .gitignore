@@ -1,6 +1,6 @@
 models/
-models_fold_1/
 data/
+data_test/
 features/
 results/
 CV-Results/

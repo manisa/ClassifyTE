@@ -48,7 +48,7 @@ def getCodeLabel(lines):
 	return content
 
 
-def main(algorithm, data, modelname):
+def main(h, data, algorithm, modelname):
 	# ------------------------- Generate hierarcical classification for the sequence-----------------------------
 	model_filepath = "models/"
 	output_filepath = "output/"
@@ -62,7 +62,7 @@ def main(algorithm, data, modelname):
 	with open(model_filepath + pkl_filename, 'rb') as fb:
 		parent_classifiers = pickle.load(fb)
 
-	print("---------------------------------------------Evaluation Started---------------------------------------------\n")
+	print("---------------------------Evaluation Started----------------------------\n")
 	m = mo.model(h, algorithm)
 
 	labels_test = m.evaluate_model(test_data, parent_classifiers)
@@ -104,38 +104,48 @@ if __name__ == '__main__':
 	
 
 	hier_label = {}
-	hier_label = main(options.algorithm, data, options.modelname)
+	hier_label = main(h, data, options.algorithm, options.modelname)
 
 	output_filepath = "output/"
-	output_filename = "predicted_result.txt"
+	if not os.path.isdir(output_filepath):
+		os.mkdir(output_filepath)
+	output_filename = "predicted_out.csv"
+	output_txt = "predicted_result.txt"
 	f = open(os.path.join(output_filepath, output_filename) ,'w')
-	f.write('--------------------------------Predictions--------------------------------\n')
-	f.write('\n')
-	
+	ft = open(os.path.join(output_filepath, output_txt) ,'w')
+	f.write("Sequence ID" + "," + "Predicted label" + "\n")
+	ft.write("Prediction Results" + "\n")
 	
 	count = 0
 	for k in hier_label:
 		name = str(seq_names[count])
 		print("Prediction for TE sequence of ID: {}".format(name))
-		f.write("Prediction for TE sequence of ID: {}".format(name))
+		ft.write("Prediction for TE sequence of ID: {}".format(name))
 		j = 1
 		predicted_labels = []
 		for i in k:
 			label = getLabel(content,str(i))	
 			predicted_labels.append(str(label))
 			print("Predicted level {} : {}".format(str(i), str(label)))
-			f.write("Predicted level {} : {}".format(str(i), str(label)))
-			f.write("\n")
+			ft.write("Predicted level {} : {}".format(str(i), str(label)))
+			ft.write("\n")
 			j = j +1
-		f.write("Final label of TE sequence is {}".format(label))
-		f.write('\n\n')
-		f.write('###############################################################')
-		f.write('\n\n')
+		ft.write("Final label of TE sequence is {}".format(label))
+		ft.write('\n\n')
+		ft.write('###############################################################')
+		ft.write('\n\n')
+		seq_id = name.split(" ")
+		print(seq_id[0])
+		f.write(seq_id[0])
+		f.write(',')
+		f.write(label)
+		f.write('\n')
 		print('\n')
 		print('###############################################################')
 		print('\n')
 		count +=1
 	f.close()
+	ft.close()
 	elapsed_time = time.time() - start_time
 	print("\nTotal time elapsed in seconds\t", elapsed_time)
 	
