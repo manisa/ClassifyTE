@@ -1,6 +1,6 @@
 models/
-data/
 data_test/
 results/
 CV-Results/
 10-fold-data/
+data/
