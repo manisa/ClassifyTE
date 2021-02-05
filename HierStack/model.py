@@ -35,16 +35,16 @@ class model:
 	def generate_models(self, dataInnerNode, index, cost, gammas):
 		cost = float(cost)
 		gammas = float(gammas)
-		print(f'Cost and Gamma values : {cost} , {gammas}') 
-		#uncomment following to save node level models
-		# output_filepath = 'models_node'
-		# if not os.path.isdir(output_filepath):
-		# 	os.mkdir(output_filepath)
+		model_filepath = 'models_levelwise'
+		if not os.path.isdir(model_filepath):
+			os.mkdir(model_filepath)
+		
 		i = 0
 		parent_classifiers = {}
 		for node in dataInnerNode:
-			#pkl_filename_node = "ClassifyTE_combined_" + str(cost) + "_" + str(gammas) + "_" + str(node) + ".pkl"
+			pkl_filename_node = "model_node"  + str(node) + "_iter" + str(index) + ".pkl"
 			print(f'Classifier building for node {node}')
+
 
 			i = i + 1
 			base_classifiers = []
@@ -64,7 +64,7 @@ class model:
 				('KNN', KNeighborsClassifier(n_neighbors=15, algorithm='auto')) ])
 			param = {'C' : cost, 'gamma' : gammas}
 			SVM = Pipeline([('scaler', preprocessing.StandardScaler()),('SVM_RBF', SVC(C=cost, gamma=gammas, kernel='rbf',class_weight='balanced',probability=True, random_state=42))])
-			ET = Pipeline([('scaler', preprocessing.StandardScaler()),('Extra_Trees', ExtraTreesClassifier(n_estimators = 800, max_depth=8, class_weight='balanced', random_state=42))])
+			ET = Pipeline([('scaler', preprocessing.StandardScaler()),('Extra_Trees', ExtraTreesClassifier(n_estimators = 1000, max_depth=8, class_weight='balanced', random_state=42))])
 
 			base_classifiers = [ KNN , SVM, ET]
 			meta_classifier = Pipeline([('scaler', preprocessing.StandardScaler()),('Log_Reg', LogisticRegression(solver='lbfgs', multi_class='multinomial', class_weight="balanced", max_iter=12000, n_jobs=-1) )])
@@ -77,12 +77,14 @@ class model:
 
 			if len(np.unique(node_label.values))==1:
 				parent_classifiers[node] = str(np.unique(node_label.values)[0])
+				with open(os.path.join(model_filepath, pkl_filename_node), "wb") as fn:
+					pickle.dump(parent_classifiers[node], fn)
+				fn.close()
 			else:
 				parent_classifiers[node] = clf.fit(X,y,node,index)
-				#---------------------- Save level wise models to files---------------------------
-				#uncomment folloing to save node-level models
-				# with open(os.path.join(output_filepath, pkl_filename_node), "wb") as fn:
-				# 	pickle.dump(parent_classifiers[node], fn)
+				with open(os.path.join(model_filepath, pkl_filename_node), "wb") as fn:
+					pickle.dump(parent_classifiers[node], fn)
+				fn.close()
 		return parent_classifiers
 
 	def test_model(self, test_data, test_label, parent_classifiers):

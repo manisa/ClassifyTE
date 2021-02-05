@@ -16,8 +16,8 @@ from HierStack import model as mo
 from HierStack import lcpnb as cl
 from HierStack.stackingClassifier import *
 
-def getSequenceName(curr_dir):
-	input_files_dir = curr_dir+"/features/kanalyze-2.0.0/input_data/"
+def getSequenceName(curr_dir, feature_folder):
+	input_files_dir = os.path.join(curr_dir+ feature_folder) + "/kanalyze-2.0.0/input_data/"
 	_, _, files = next(os.walk(input_files_dir))
 	files = sorted(files)
 	seqIDs = []
@@ -75,6 +75,8 @@ if __name__ == '__main__':
 
 	parser = OptionParser()
 	parser.add_option("-f", "--filename", dest="filename", help="Name of the feature file.", default="feature_file.csv")
+	parser.add_option("-d", "--featuredir", dest="feature_dir", help="feature directory.", default="feature")
+
 	parser.add_option("-n", "--node_file", dest="node_file", help="Path to node filelist.", default="node.txt")
 	parser.add_option("-m", "--modelname", dest="modelname", help="Model name")
 	
@@ -89,7 +91,7 @@ if __name__ == '__main__':
 	curr_dir1 = os.getcwd()
 	dataset_filepath = curr_dir1 + "/data/"
 	node_filepath = curr_dir1 + "/nodes/"
-	seq_names = getSequenceName(curr_dir1)
+	seq_names = getSequenceName(curr_dir1, options.feature_dir)
 	
 	h = hie.hierarchy(node_filepath + options.node_file)
 	start_time = time.time()

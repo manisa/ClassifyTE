@@ -1,5 +1,3 @@
-#testing leave-one-out CV ie Jack Knife sampling technique to compute biasness
-
 from sklearn.base import *
 import numpy as np
 import pandas as pd
@@ -44,7 +42,7 @@ class StackingClassifier:
 		for i, clf in enumerate(self.base_models):
 			print('INSIDE 10FOLD CV')
 			print(f'---------------------------fitting base model {index}-------------------------')
-			clf_prediction = cross_val_predict(clf, X, y, cv=10, method='predict_proba', n_jobs=-1)
+			clf_prediction = cross_val_predict(clf, X, y, cv=50, method='predict_proba', n_jobs=-1)
 			cv_probabilities.append(clf_prediction)
 			index = index + 1
 		indx = 1
