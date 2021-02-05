@@ -8,16 +8,16 @@ import argparse
 from optparse import OptionParser
 from sklearn.linear_model import LogisticRegression
 
-
-
 import pickle
 from HierStack import hierarchy as hie
-from HierStack import model as mo
-from HierStack import lcpnb as cl
+from HierStack import lcpnb as lcpnb
+from HierStack import nllcpn as nllcpn
 from HierStack.stackingClassifier import *
 
 def getSequenceName(curr_dir, feature_folder):
-	input_files_dir = os.path.join(curr_dir+ feature_folder) + "/kanalyze-2.0.0/input_data/"
+	print(curr_dir)
+	input_files_dir = os.path.join(curr_dir + feature_folder) + "/kanalyze-2.0.0/input_data/"
+	print(input_files_dir)
 	_, _, files = next(os.walk(input_files_dir))
 	files = sorted(files)
 	seqIDs = []
@@ -47,6 +47,17 @@ def getCodeLabel(lines):
 	content = dict(zip(code,label))
 	return content
 
+def evaluate_model(test_data, parent_classifiers, algorithm, h):
+	labels_evaluate = []
+	for i in range(len(test_data)):
+		if algorithm == "lcpnb":
+			c = lcpnb.lcpnb(h)
+		elif algorithm == "nllcpn":
+			c = nllcpn.nllcpn(h)
+		predicted = c.classify(test_data.iloc[i].values.reshape(1,-1),parent_classifiers)
+		labels_evaluate.append(predicted)
+	return labels_evaluate
+
 
 def main(h, data, algorithm, modelname):
 	# ------------------------- Generate hierarcical classification for the sequence-----------------------------
@@ -63,9 +74,8 @@ def main(h, data, algorithm, modelname):
 		parent_classifiers = pickle.load(fb)
 
 	print("---------------------------Evaluation Started----------------------------\n")
-	m = mo.model(h, algorithm)
 
-	labels_test = m.evaluate_model(test_data, parent_classifiers)
+	labels_test = evaluate_model(test_data, parent_classifiers, algorithm, h )
 
 	return labels_test
 
@@ -91,9 +101,12 @@ if __name__ == '__main__':
 	curr_dir1 = os.getcwd()
 	dataset_filepath = curr_dir1 + "/data/"
 	node_filepath = curr_dir1 + "/nodes/"
-	seq_names = getSequenceName(curr_dir1, options.feature_dir)
+	feature_folder = "/" + options.feature_dir
+	seq_names = getSequenceName(curr_dir1, feature_folder)
 	
+
 	h = hie.hierarchy(node_filepath + options.node_file)
+
 	start_time = time.time()
 
 	with open(dataset_filepath + options.filename , "r") as csvfile:

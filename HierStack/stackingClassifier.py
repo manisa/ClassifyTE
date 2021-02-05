@@ -40,7 +40,7 @@ class StackingClassifier:
 		cv_probabilities = []
 		index = 1 
 		for i, clf in enumerate(self.base_models):
-			print('INSIDE 10FOLD CV')
+			print('INSIDE 50FOLD CV')
 			print(f'---------------------------fitting base model {index}-------------------------')
 			clf_prediction = cross_val_predict(clf, X, y, cv=50, method='predict_proba', n_jobs=-1)
 			cv_probabilities.append(clf_prediction)

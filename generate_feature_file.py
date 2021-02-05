@@ -12,9 +12,10 @@ from shutil import copy2
 def feature_generation(curr_dir1,output_file, feature_dir):
 	#copy list.txt to features/ and  features/kanalyze-2.0.0/code
 	feature_destpath = os.path.join(curr_dir1, feature_dir)
-	kanalyzer_destpath = feature_destpath + "kanalyze-2.0.0/code/"
-	kanalyzer_input_destpath = feature_destpath + "kanalyze-2.0.0/input_data/"
-	kanalyzer_output_destpath = feature_destpath + "kanalyze-2.0.0/output_data/"
+	print(f'The feature dest path : {feature_destpath}')
+	kanalyzer_destpath = feature_destpath + "/kanalyze-2.0.0/code/"
+	kanalyzer_input_destpath = feature_destpath + "/kanalyze-2.0.0/input_data/"
+	kanalyzer_output_destpath = feature_destpath + "/kanalyze-2.0.0/output_data/"
 
 	mer2_dir = kanalyzer_output_destpath + '2mer/'
 	mer3_dir = kanalyzer_output_destpath + '3mer/'
@@ -48,7 +49,7 @@ def feature_generation(curr_dir1,output_file, feature_dir):
 	subprocess.run(['./runKanalyzer_generate_all_features'])
 
 	change_dir = os.chdir(feature_destpath)
-	
+	#print(change_dir)
 	
 	subprocess.run(['javac','KmersFeaturesCollector.java'])
 	subprocess.run(['javac','BufferReaderAndWriter.java'])
@@ -67,13 +68,13 @@ def feature_generation(curr_dir1,output_file, feature_dir):
 
 	
 
-def get_data(fasta_file):
+def get_data(fasta_file, feature_dir):
 	curr_dir1 = os.getcwd()
 	data_filepath = curr_dir1 + "/data/"
-	feature_destpath = curr_dir1 + "/features/" 
-	kanalyzer_destpath = feature_destpath + "kanalyze-2.0.0/code/"
-	kanalyzer_input_destpath = feature_destpath + "kanalyze-2.0.0/input_data/"
-	kanalyzer_output_destpath = feature_destpath + "kanalyze-2.0.0/output_data/"
+	feature_destpath = os.path.join(curr_dir1,feature_dir) 
+	kanalyzer_destpath = feature_destpath + "/kanalyze-2.0.0/code/"
+	kanalyzer_input_destpath = feature_destpath + "/kanalyze-2.0.0/input_data/"
+	kanalyzer_output_destpath = feature_destpath + "/kanalyze-2.0.0/output_data/"
 
 	if os.path.isdir(kanalyzer_input_destpath):
 		subprocess.run(['rm','-R',kanalyzer_input_destpath])
@@ -101,7 +102,7 @@ def get_data(fasta_file):
 				of.write(">" + meta)
 				of.close()
 	fp.close()
-	curr_dir2 = os.getcwd() + "/features/kanalyze-2.0.0/input_data/"
+	curr_dir2 = os.path.join(os.getcwd(),feature_dir) + "/kanalyze-2.0.0/input_data/"
 	change_dir = os.chdir(curr_dir2)
 	#files = [f for f in os.listdir('.') if os.path.isfile(f)]
 	_, _, files = next(os.walk(curr_dir2))
@@ -128,9 +129,13 @@ def main():
 	(options, args) = parser.parse_args()
 	fasta_file = options.filename
 	output_file = options.output_filename
-	get_data(fasta_file)
+	
+	if not options.feature_dir == "features":
+		subprocess.run(['cp', '-R', 'features', options.feature_dir])
 
+	get_data(fasta_file, options.feature_dir)
 
+	
 	#if we want to provide sequence in the command line, uncomment following
 	# te_id = sys.argv[1]
 	# fasta = sys.argv[2]

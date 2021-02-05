@@ -66,14 +66,14 @@ ClassifyTE/
 ```
 - Firstly, Run following python command from the root directory to generate feature file.
 ```
-python generate_feature_file.py -f demo.fasta
+python generate_feature_file.py -f demo.fasta -d demo_features -o demo_features.csv
 ```
 
 #### *Parameters*
 For **generate_feature_file.py**, the user has to provide two parameters:
 - -f for fasta filename from  **data** directory.
 - -o for resulting feature file name with **.csv** extension [**Optional**]  [By default the feature filename is **feature_file.csv**.]
-
+- -d for feature folder.
 - Then run following python command from the root directory to get the prediction on new TE sequences. Prior following command, please make sure that all the model files have already been added to **models** directory. 
 
 ```
@@ -82,6 +82,7 @@ python evaluate.py -f feature_file.csv -n node.txt -m ClassifyTE_combined.pkl
 #### *Parameters*
 For **evaluate.py**, the user has to provide following parameters:
 - -f for feature file name which is by default *feature_file.csv* unless user have provided a feature filename in earlier step.
+-d for feature folder name
 - -n for node filename which is by default *node.txt*. Node file consists of numerical representation of taxonomy of the dataset. Please check nodes folder for other node files for each dataset.
 - -m for model filename which has **.pkl** as file extension. All the model files must have been added in **models** directory.
 
@@ -99,18 +100,19 @@ ClassifyTE/
 ```
 - Firstly, Run following python command from the root directory to generate feature file.
 ```
-python generate_feature_file.py -f your_fasta_file_name -o your_feature_file_name
+python generate_feature_file.py -f your_fasta_file_name -o your_feature_file_name -d your_feature_directory
 ```
 
 #### *Parameters*
 For **generate_feature_file.py**, the user has to provide two parameters:
 - -f for fasta filename from  **data** directory.
+- -d for feature folder name if you want to replace the name of the feature directory so as to generate features for multiple fasta sequences.
 - -o for resulting feature file name with **.csv** extension [**Optional**]  [By default the feature filename is **feature_file.csv**.]
 
 - Then run following python command from the root directory to get the prediction on new TE sequences. Prior following command, please make sure that all the model files have already been added to **models** directory. 
 
 ```
-python evaluate.py -f your_feature_file_name -n node.txt -m ClassifyTE_combined.pkl
+python evaluate.py -f your_feature_file_name -d your_feature_directory -n node_file -m model_name
 ```
 #### *Parameters*
 For **evaluate.py**, the user has to provide following parameters:
@@ -129,20 +131,21 @@ For **evaluate.py**, the user has to provide following parameters:
 ```
 ClassifyTE/
 	data/
-		mips_features_TE_upto_6mer.csv
-		repbase_features_TE_upto_6mer.csv
-		mips+repbase_features_TE_upto_6mer.csv
+		mips_feature_file.csv
+		repbase_feature_file.csv
+		combined.csv
 ```
 
 ## Training
 - To replicate the training procedure, follow following command line
 ```
-python train.py -f csv_file_name -n txt_node_file -c SVM_cost_parameter -g SVM_gamma_parameter
+python train.py -f csv_file_name -n txt_node_file -m model_filename -c SVM_cost_parameter -g SVM_gamma_parameter
 ```
 
 #### *Parameters*
 For **train.py**, the user has to provide following parameters:
 - -f for feature file name.
+- -m for model file name
 - -n for node filename. Node file consists of numerical representation of taxonomy of the dataset.
 - -c for cost parameter of SVM with RBF kernel
 - -g for gamma parameter of SVM with RBF kernel
@@ -162,8 +165,9 @@ For combined dataset : C=512.0, gamma=0.0078125
 
 - If you would like to train the model on your machine, the training example would look like as below:
 ```
-python train.py -f repbase_features_TE_upto_6mer.csv -n node_repbase.txt -c 128.0 -g 0.0078125
+python train.py -f combined.csv -n node.txt -m ClassifyTE_combined.pkl -c 512.0 -g 0.0078125
 ```
+
 
 ## Authors
 Manisha Panta, Avdesh Mishra, Md Tamjidul Hoque, Joel Atallah

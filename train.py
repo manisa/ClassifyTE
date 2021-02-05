@@ -15,7 +15,7 @@ from HierStack import hierarchy as hie
 from HierStack import model as mo
 import HierStack.classification as cl
 
-def main(data, h, algorithm, cost, gamma, model_filename):	
+def main(train_data, h, algorithm, cost, gamma, model_filename):	
 	index = 1
 	model_filepath = 'models'
 	if not os.path.isdir(model_filepath):
@@ -41,8 +41,9 @@ def main(data, h, algorithm, cost, gamma, model_filename):
 if __name__ == '__main__':
 
 	parser = OptionParser()
+	parser.add_option("-f", "--filename", dest="filename", help="Name of the training file.")
 	parser.add_option("-n", "--nodes_filepath", dest="node_file", help="Path to node filelist.", default='node.txt')
-	parser.add_option("-m", "--model_filename", dest="model_file", help="output model filename", default='ClassifyTE.pkl')
+	parser.add_option("-m", "--model_filename", dest="model_filename", help="output model filename", default='ClassifyTE.pkl')
 	parser.add_option("-c", "--c_value", dest="c_value", help="c parameter for SVM")
 	parser.add_option("-g", "--gamma_value", dest="gamma_value", help="gamma parameter for SVM")
 	

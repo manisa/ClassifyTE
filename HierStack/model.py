@@ -117,11 +117,3 @@ class model:
 		self.precision_level.append(pi_ti_level/pi_level)
 		self.recall_level.append(pi_ti_level/ti_level)
 		self.hf_level.append(2  * np.multiply(self.precision_level[-1],self.recall_level[-1])/(self.precision_level[-1] + self.recall_level[-1]))
-
-	def evaluate_model(self, test_data, parent_classifiers):
-		labels_evaluate = []
-		for i in range(len(test_data)):
-			c = lcpnb.lcpnb(self.h)
-			predicted = c.classify(test_data.iloc[i].values.reshape(1,-1),parent_classifiers)
-			labels_evaluate.append(predicted)
-		return labels_evaluate
