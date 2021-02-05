@@ -63,6 +63,7 @@ def main(h, data, algorithm, modelname):
 	# ------------------------- Generate hierarcical classification for the sequence-----------------------------
 	model_filepath = "models/"
 	output_filepath = "output/"
+	model_nodepath = "models_levelwise/"
 	pkl_filename = modelname
 
 	test_data = data.iloc[:, 0:(pow(4,2) + pow(4,3) + pow(4,4))]
@@ -70,13 +71,31 @@ def main(h, data, algorithm, modelname):
 
 	parent_classifiers = {}
 
-	with open(model_filepath + pkl_filename, 'rb') as fb:
-		parent_classifiers = pickle.load(fb)
+	nodes = ["0", "1.1.1", "1.1.2", "1.1.3", "1.1", "1.2", "1.4.1", "1.4.2", "1.4.3", "1.4.4", "1.4.5",
+	 			"1.4", "1.5.1", "1.5.2", "1.5.3", "1.5", "1", "2.1.1.1", "2.1.1.2", "2.1.1.3", "2.1.1.4",
+	 			"2.1.1.5", "2.1.1.7", "2.1.1.8", "2.1.1.9", "2.1.1", "2.1", "2"]
+
+	#nodes = ["0", "1", "2", "2.1", "2.1.1", "2.1.1.1"]
+	#nodes = ["0", "1.1", "1.4", "1.5", "1", "2.1.1", "2.1", "2", "2.1.1.1"]
+	i = 1
+	for node in nodes:
+		#node = int(node)
+		print(node)
+		pkl_filename_node = "model_node"  + str(node) + "_iter" + str(i) + ".pkl"
+		print(model_nodepath + pkl_filename_node)
+		with open(model_nodepath + pkl_filename_node, 'rb') as fb:
+			parent_classifiers[node] = pickle.load(fb)	
+
+
+	# with open(model_filepath + pkl_filename, 'rb') as fb:
+	# 	parent_classifiers = pickle.load(fb)
+
 
 	print("---------------------------Evaluation Started----------------------------\n")
 
 	labels_test = evaluate_model(test_data, parent_classifiers, algorithm, h )
-
+	
+	fb.close()
 	return labels_test
 
 
@@ -124,8 +143,8 @@ if __name__ == '__main__':
 	output_filepath = "output/"
 	if not os.path.isdir(output_filepath):
 		os.mkdir(output_filepath)
-	output_filename = "predicted_out.csv"
-	output_txt = "predicted_result.txt"
+	output_filename = "predicted_out_" + options.feature_dir + ".csv"
+	output_txt = "predicted_result_" + options.feature_dir + ".txt"
 	f = open(os.path.join(output_filepath, output_filename) ,'w')
 	ft = open(os.path.join(output_filepath, output_txt) ,'w')
 	f.write("Sequence ID" + "," + "Predicted label" + "\n")
