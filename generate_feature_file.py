@@ -12,7 +12,7 @@ from shutil import copy2
 def feature_generation(curr_dir1,output_file, feature_dir):
 	#copy list.txt to features/ and  features/kanalyze-2.0.0/code
 	feature_destpath = os.path.join(curr_dir1, feature_dir)
-	print(f'The feature dest path : {feature_destpath}')
+	#print(f'The feature dest path : {feature_destpath}')
 	kanalyzer_destpath = feature_destpath + "/kanalyze-2.0.0/code/"
 	kanalyzer_input_destpath = feature_destpath + "/kanalyze-2.0.0/input_data/"
 	kanalyzer_output_destpath = feature_destpath + "/kanalyze-2.0.0/output_data/"
@@ -49,7 +49,6 @@ def feature_generation(curr_dir1,output_file, feature_dir):
 	subprocess.run(['./runKanalyzer_generate_all_features'])
 
 	change_dir = os.chdir(feature_destpath)
-	#print(change_dir)
 	
 	subprocess.run(['javac','KmersFeaturesCollector.java'])
 	subprocess.run(['javac','BufferReaderAndWriter.java'])
@@ -127,13 +126,17 @@ def main():
 	parser.add_option("-o", "--output", dest="output_filename", help="Name of feature file", default="feature_file.csv")
 	parser.add_option("-d", "--featuredir", dest="feature_dir", help="feature directory.", default="features")
 	(options, args) = parser.parse_args()
+	
 	fasta_file = options.filename
 	output_file = options.output_filename
 	
-	if not options.feature_dir == "features":
-		subprocess.run(['cp', '-R', 'features', options.feature_dir])
+	feature_dir = os.path.join(os.getcwd(),options.feature_dir) + '/'
+	src = os.getcwd() + "/features/"
 
-	get_data(fasta_file, options.feature_dir)
+	if not options.feature_dir == "features":
+ 		destination = shutil.copytree(src, feature_dir)
+
+	get_data(fasta_file, feature_dir)
 
 	
 	#if we want to provide sequence in the command line, uncomment following
@@ -153,7 +156,7 @@ def main():
 	# 	f.write(str(te_id)+ ".fasta")
 	# f.close()
 
-	feature_generation(curr_dir1, output_file, options.feature_dir)
+	feature_generation(curr_dir1, output_file, feature_dir)
 	#subprocess.run(['python', 'evaluate.py','-f','feature_file.csv','-n','node.txt', 'm', ''])
 	
 
