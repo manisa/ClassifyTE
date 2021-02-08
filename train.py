@@ -62,8 +62,13 @@ if __name__ == '__main__':
 	with open(dataset_filepath + options.filename , "r") as csvfile:
 		data = pd.read_csv(csvfile, low_memory=False)
 
+	X = data.iloc[:, 0:(pow(4,2) + pow(4,3) + pow(4,4))]
+	Y = data.iloc[:,-1]
+
+	train_data = pd.concat([X, Y], axis=1)
+
 	start_time = time.time()
-	main(data, h, options.algorithm, options.c_value, options.gamma_value, options.model_filename)
+	main(train_data, h, options.algorithm, options.c_value, options.gamma_value, options.model_filename)
 	total_time = time.time() - start_time
 	print("---------------------------------------------Ending Training--------------------------------------------")
 	print("\nTotal time elapsed in minutes\t", total_time/60)
