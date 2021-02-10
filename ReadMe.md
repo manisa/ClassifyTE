@@ -42,7 +42,7 @@ conda activate ClassifyTE_env
 
 
 ## Download Models
-- Go to [this link](https://drive.google.com/file/d/1fwlAJOXQneXu4OMNVQhT17lpfmvvyYuU/view?usp=sharing).
+- Go to [this link](https://drive.google.com/file/d/1s8a42--To1acGtE6sbOIUwCJ-DPzQ1DL/view?usp=sharing).
 - Click on **ClassifyTE_Models.zip**. This will automatically download models built with TE datasets.
 - Unzip and copy all the models from "ClassifyTE_Models" directory into the folder **model** inside the root folder **ClassifyTE**.
 - Your directory structure should look like this:
@@ -51,8 +51,6 @@ conda activate ClassifyTE_env
 ClassifyTE/
 	models/
 		ClassifyTE_combined.pkl
-		ClassifyTE_repbase.pkl
-		ClassifyTE_mips.pkl
 ```
 
 ## Demo
@@ -165,7 +163,7 @@ For combined dataset : C=512.0, gamma=0.0078125
 
 - If you would like to train the model on your machine, the training example would look like as below:
 ```
-python train.py -f combined.csv -n node.txt -m ClassifyTE_combined.pkl -c 512.0 -g 0.0078125
+python train.py -f combined.csv -n node.txt -m ClassifyTE_combined -c 512.0 -g 0.0078125
 ```
 
 
