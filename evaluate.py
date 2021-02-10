@@ -15,9 +15,7 @@ from HierStack import nllcpn as nllcpn
 from HierStack.stackingClassifier import *
 
 def getSequenceName(curr_dir, feature_folder):
-	print(curr_dir)
 	input_files_dir = os.path.join(curr_dir + feature_folder) + "/kanalyze-2.0.0/input_data/"
-	print(input_files_dir)
 	_, _, files = next(os.walk(input_files_dir))
 	files = sorted(files)
 	seqIDs = []
@@ -62,33 +60,15 @@ def evaluate_model(test_data, parent_classifiers, algorithm, h):
 def main(h, data, algorithm, modelname):
 	# ------------------------- Generate hierarcical classification for the sequence-----------------------------
 	model_filepath = "models/"
-	output_filepath = "output/"
-	model_nodepath = "models_levelwise/"
 	pkl_filename = modelname
 
 	test_data = data.iloc[:, 0:(pow(4,2) + pow(4,3) + pow(4,4))]
 	test_label = data.iloc[:,-1]
 
 	parent_classifiers = {}
-
-	nodes = ["0", "1.1.1", "1.1.2", "1.1.3", "1.1", "1.2", "1.4.1", "1.4.2", "1.4.3", "1.4.4", "1.4.5",
-	 			"1.4", "1.5.1", "1.5.2", "1.5.3", "1.5", "1", "2.1.1.1", "2.1.1.2", "2.1.1.3", "2.1.1.4",
-	 			"2.1.1.5", "2.1.1.7", "2.1.1.8", "2.1.1.9", "2.1.1", "2.1", "2"]
-
-	#nodes = ["0", "1", "2", "2.1", "2.1.1", "2.1.1.1"]
-	#nodes = ["0", "1.1", "1.4", "1.5", "1", "2.1.1", "2.1", "2", "2.1.1.1"]
-	i = 1
-	for node in nodes:
-		#node = int(node)
-		print(node)
-		pkl_filename_node = "model_node"  + str(node) + "_iter" + str(i) + ".pkl"
-		print(model_nodepath + pkl_filename_node)
-		with open(model_nodepath + pkl_filename_node, 'rb') as fb:
-			parent_classifiers[node] = pickle.load(fb)	
-
-
-	# with open(model_filepath + pkl_filename, 'rb') as fb:
-	# 	parent_classifiers = pickle.load(fb)
+	#load model
+	with open(model_filepath + pkl_filename, 'rb') as fb:
+		parent_classifiers = pickle.load(fb)
 
 
 	print("---------------------------Evaluation Started----------------------------\n")
