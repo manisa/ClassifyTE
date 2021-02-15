@@ -42,7 +42,7 @@ conda activate ClassifyTE_env
 
 
 ## Download Models
-- Go to [this link](https://drive.google.com/file/d/1s8a42--To1acGtE6sbOIUwCJ-DPzQ1DL/view?usp=sharing).
+- Go to [this link](https://drive.google.com/file/d/1CuDciG0Ru5zRBhffjQmgJdqSMQB89mfh/view?usp=sharing).
 - Click on **ClassifyTE_Models.zip**. This will automatically download models built with TE datasets.
 - Unzip and copy all the models from "ClassifyTE_Models" directory into the folder **model** inside the root folder **ClassifyTE**.
 - Your directory structure should look like this:
@@ -51,6 +51,8 @@ conda activate ClassifyTE_env
 ClassifyTE/
 	models/
 		ClassifyTE_combined.pkl
+		ClassifyTE_repbase.pkl
+		ClassifyTE_pgsb.pkl
 ```
 
 ## Demo
@@ -122,7 +124,7 @@ For **evaluate.py**, the user has to provide following parameters:
 - Finally, check **predicted_result.csv** file inside **output** folder for predicted label of the TE sequence/s.
 
 ## Download datasets
-- Go to [this link](https://drive.google.com/file/d/1vZKPjug1LsH75a7JdKKMi10ECTjUIwAm/view?usp=sharing).
+- Go to [this link](https://drive.google.com/file/d/1a18Kcv6PEJiShWm1Fm3aKdbhpznwXcKO/view?usp=sharing).
 - Click on **ClassifyTE_Datasets.zip**. This will automatically download the datasets used to generate models.
 - Unzip and copy all the datasets from **ClassifyTE_Datasets** directory into the folder **data** inside the root folder **ClassifyTE**.
 - Your directory structure should look like this:
@@ -130,7 +132,7 @@ For **evaluate.py**, the user has to provide following parameters:
 ```
 ClassifyTE/
 	data/
-		mips_feature_file.csv
+		pgsb_feature_file.csv
 		repbase_feature_file.csv
 		combined.csv
 ```
