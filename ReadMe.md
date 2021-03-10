@@ -77,7 +77,7 @@ For **generate_feature_file.py**, the user has to provide two parameters:
 - Then run following python command from the root directory to get the prediction on new TE sequences. Prior following command, please make sure that all the model files have already been added to **models** directory. 
 
 ```
-python evaluate.py -f feature_file.csv -n node.txt -d features -m ClassifyTE_combined.pkl -a lcpnb
+python evaluate.py -f demo_features.csv -n node.txt -d demo_features -m ClassifyTE_combined.pkl -a lcpnb
 ```
 #### *Parameters*
 For **evaluate.py**, the user has to provide following parameters:
