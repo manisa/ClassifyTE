@@ -1,6 +1,6 @@
 # ClassifyTE: Stacking-based Machine Learning Framework for Hierarchical Classification of transposable 
 
-- [Paper](https://arxiv.org/abs/1907.01674)
+- [Paper](https://academic.oup.com/bioinformatics/advance-article-abstract/doi/10.1093/bioinformatics/btab146/6158037?redirectedFrom=fulltext#)
 - The basic framework has been adapted from the state-of-the-art method [1].
 
 ### Table of Content
